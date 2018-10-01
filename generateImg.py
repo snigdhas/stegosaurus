@@ -106,10 +106,10 @@ canvas = Canvas(master,
            height=dim)
 canvas.pack()
 
-n_rows = 10
-n_cols = 10
+n_rows = 11
+n_cols = 11
 
 # drawGrid(canvas, n_rows, n_cols, dim)
-encodedMessage = parseInput("hello ")
+encodedMessage = parseInput("dinosaur")
 drawEncodedMessage(canvas, encodedMessage, dim, n_rows, n_cols)
 mainloop()
