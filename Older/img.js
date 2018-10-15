@@ -12,21 +12,21 @@ const DIM = 1200;
 function setup() {
   createCanvas(DIM, DIM);
   background(255, 255, 255);
-  noStroke();
+  stroke(0);
   noLoop();
   mapSetup();
-  MAROON = color(255, 159, 112);
-  PINK = color(255, 165, 171);
-  YELLOW = color(255, 236, 130);
-  CYAN = color(21, 135, 127);
-  PURPLE = color(174, 214, 126);  
+  MAROON = color("#FF9F70");
+  PINK = color("#FFA5AB");
+  YELLOW = color("#FFEC82");
+  CYAN = color("#15877F");
+  PURPLE = color("#AED67E");
   // MAROON = color(128, 0, 0);
   // PINK = color(252, 0, 172);
   // YELLOW = color(242, 238, 36);
   // CYAN = color(65, 205, 225);
   // PURPLE = color(137, 0, 150);
-  processInput("stegosaurus");
-  // drawGrid();
+  processInput("abcdefghijklmnopqrst");
+  drawGrid();
   for (var i = 0; i < N_COLS; i++) {
     drawEncodedMessage(N_ROWS, N_COLS, 150 * i);
   }
@@ -63,23 +63,6 @@ function drawEncodedMessage(N_ROWS, N_COLS, offset) {
     code.map(function(i) {
       instr = i.split(" ");
       fillColor = instr[1];
-      switch (fillColor) {
-        case "MAROON":
-          fillColor = MAROON;
-          break;
-        case "PINK":
-          fillColor = PINK;
-          break;
-        case "PURPLE":
-          fillColor = PURPLE;
-          break;
-        case "CYAN":
-          fillColor = CYAN;
-          break;
-        case "YELLOW": 
-          fillColor = YELLOW;
-          break;
-      }
       shape = instr[0];
       switch (shape) {
         case "circle":
@@ -132,6 +115,7 @@ function drawTallRect(x1, y1, fillColor) {
 function drawLongRect(x1, y1, fillColor) {
   const w = 20;
   const h = 10;
+  y1 += w;
   fill(fillColor);
   rect(x1, y1, w, h);
 }
@@ -227,7 +211,7 @@ function mapSetup() {
   ALPHA_MAP["k"] = ["funkyShape CYAN", "square PURPLE", "square PURPLE", "funkyShape CYAN", "square PURPLE", "square PURPLE"];
   ALPHA_MAP["l"] = ["pentagon CYAN", "funkyShape MAROON", "pentagon CYAN", "funkyShape MAROON", "pentagon CYAN", "funkyShape MAROON"];
   ALPHA_MAP["m"] = ["longRectangle YELLOW", "square PINK", "longRectangle YELLOW", "square PINK", "longRectangle YELLOW", "square PINK"];
-  ALPHA_MAP["n"] = ["tallRectangle CYAN", "shortRectangle YELLOW", "tallRectangle CYAN", "shortRectangle YELLOW", "tallRectangle CYAN", "shortRectangle YELLOW"];
+  ALPHA_MAP["n"] = ["tallRectangle CYAN", "square YELLOW", "tallRectangle CYAN", "square YELLOW", "tallRectangle CYAN", "square YELLOW"];
   ALPHA_MAP["o"] = ["tallRectangle CYAN", "tallRectangle YELLOW", "tallRectangle CYAN", "tallRectangle YELLOW", "tallRectangle CYAN", "tallRectangle YELLOW"];
   ALPHA_MAP["p"] = ["pentagon YELLOW", "circle PURPLE", "pentagon YELLOW", "circle PURPLE", "pentagon YELLOW", "circle PURPLE"];
   ALPHA_MAP["q"] = ["pentagon CYAN", "pentagon CYAN", "pentagon CYAN", "pentagon CYAN", "pentagon CYAN", "pentagon CYAN"];
