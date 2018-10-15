@@ -307,7 +307,6 @@ function drawTestShapes() {
   drawPentagon(75, 365, CYAN);
   drawPentagon(100, 365, PURPLE);
   drawPentagon(125, 365, MAROON);
-}LOW);
   drawPentagon(75, 365, CYAN);
   drawPentagon(100, 365, PURPLE);
   drawPentagon(125, 365, MAROON);
