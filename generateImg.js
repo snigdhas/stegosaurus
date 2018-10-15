@@ -1,3 +1,4 @@
+const INPUT = "abcdefghijklmnopqrstuvwxyz abc"
 var ALPHA_MAP = {};
 var MAROON;
 var PINK;
@@ -5,28 +6,24 @@ var YELLOW;
 var CYAN;
 var PURPLE;
 var ENCODED_MESSAGE;
-const N_COLS = 8;
-const N_ROWS = 20;
-const DIM = 1200;
+const N_COLS = 4;
+const N_ROWS = 30;
+const X_DIM = 600;
+const Y_DIM = 1800;
 
 function setup() {
-  createCanvas(DIM, DIM);
+  createCanvas(X_DIM, Y_DIM);
   background(255, 255, 255);
   noStroke();
   noLoop();
   mapSetup();
-  MAROON = color(255, 159, 112);
-  PINK = color(255, 165, 171);
-  YELLOW = color(255, 236, 130);
-  CYAN = color(21, 135, 127);
-  PURPLE = color(174, 214, 126);  
-  // MAROON = color(128, 0, 0);
-  // PINK = color(252, 0, 172);
-  // YELLOW = color(242, 238, 36);
-  // CYAN = color(65, 205, 225);
-  // PURPLE = color(137, 0, 150);
-  processInput("stegosaurus");
-  // drawGrid();
+  MAROON = color(128, 0, 0);
+  PINK = color(252, 0, 172);
+  YELLOW = color(242, 238, 36);
+  CYAN = color(65, 205, 225);
+  PURPLE = color(137, 0, 150);
+  processInput(INPUT);
+  drawGrid();
   for (var i = 0; i < N_COLS; i++) {
     drawEncodedMessage(N_ROWS, N_COLS, 150 * i);
   }
@@ -55,8 +52,8 @@ function drawGrid() {
 function drawEncodedMessage(N_ROWS, N_COLS, offset) {
   var x = offset;
   var y = 0;
-  row_height = width / N_ROWS
-  col_width = height / N_COLS
+  row_height = Y_DIM / N_ROWS
+  col_width = X_DIM / N_COLS
   for (var j = 0; j < ENCODED_MESSAGE.length; j++) {
     code = ENCODED_MESSAGE[j];
     x = offset;
@@ -118,8 +115,7 @@ function drawEncodedMessage(N_ROWS, N_COLS, offset) {
     });
     y += row_height;
     x += width / N_ROWS / 2
-  }
-
+  } 
 }
 
 function drawTallRect(x1, y1, fillColor) {
@@ -132,6 +128,7 @@ function drawTallRect(x1, y1, fillColor) {
 function drawLongRect(x1, y1, fillColor) {
   const w = 20;
   const h = 10;
+  y1 += w;
   fill(fillColor);
   rect(x1, y1, w, h);
 }
@@ -307,6 +304,10 @@ function drawTestShapes() {
   drawPentagon(0, 365, MAROON);
   drawPentagon(25, 365, PINK);
   drawPentagon(50, 365, YELLOW);
+  drawPentagon(75, 365, CYAN);
+  drawPentagon(100, 365, PURPLE);
+  drawPentagon(125, 365, MAROON);
+}LOW);
   drawPentagon(75, 365, CYAN);
   drawPentagon(100, 365, PURPLE);
   drawPentagon(125, 365, MAROON);
