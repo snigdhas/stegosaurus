@@ -2,7 +2,7 @@ const INPUT = "abcdefghijklmnopqrstuvwxyz .?!0123456789"
 var ALPHA_MAP = {};
 var MAROON;
 var PINK;
-var YELLOW;
+var ORANGE;
 var CYAN;
 var PURPLE;
 var ENCODED_MESSAGE;
@@ -19,7 +19,7 @@ function setup() {
   mapSetup();
   MAROON = color(128, 0, 0);
   PINK = color(252, 0, 172);
-  YELLOW = color(242, 238, 36);
+  ORANGE = color(244, 176, 66);
   CYAN = color(65, 205, 225);
   PURPLE = color(137, 0, 150);
   processInput(INPUT);
@@ -86,8 +86,8 @@ function drawEncodedMessage(N_ROWS, N_COLS, offset) {
         case "CYAN":
           fillColor = CYAN;
           break;
-        case "YELLOW": 
-          fillColor = YELLOW;
+        case "ORANGE": 
+          fillColor = ORANGE;
           break;
       }
       shape = instr[0];
@@ -202,42 +202,42 @@ function drawEncodedMessage(N_ROWS, N_COLS, offset) {
 }
 
 function mapSetup() {
-  ALPHA_MAP["a"] = ["circle PURPLE", "circle YELLOW", "circle PURPLE"];
+  ALPHA_MAP["a"] = ["circle PURPLE", "circle ORANGE", "circle PURPLE"];
   ALPHA_MAP["b"] = ["triangle1 PURPLE", "triangle2 CYAN", "triangle1 PURPLE"];
   ALPHA_MAP["c"] = ["triangle1 CYAN", "triangle2 PINK", "triangle1 CYAN"];
   ALPHA_MAP["d"] = ["triangle1 PINK", "triangle2 CYAN", "triangle1 PINK"];
-  ALPHA_MAP["e"] = ["funkyShape PURPLE", "circle YELLOW", "funkyShape PURPLE"];
+  ALPHA_MAP["e"] = ["funkyShape PURPLE", "circle ORANGE", "funkyShape PURPLE"];
   ALPHA_MAP["f"] = ["rectangle MAROON", "rectangle PINK", "rectangle MAROON"];
   ALPHA_MAP["g"] = ["circle CYAN", "rectangle PINK", "rectangle PINK"];
-  ALPHA_MAP["h"] = ["funkyShape PURPLE", "funkyShape PINK", "funkyShape YELLOW"];
+  ALPHA_MAP["h"] = ["funkyShape PURPLE", "funkyShape PINK", "funkyShape ORANGE"];
   ALPHA_MAP["i"] = ["pentagon MAROON", "rectangle PINK", "pentagon MAROON"];
-  ALPHA_MAP["j"] = ["triangle1 PURPLE", "triangle2 YELLOW", "triangle1 PURPLE"];
-  ALPHA_MAP["k"] = ["pentagon CYAN", "funkyShape YELLOW", "pentagon CYAN"];
+  ALPHA_MAP["j"] = ["triangle1 PURPLE", "triangle2 ORANGE", "triangle1 PURPLE"];
+  ALPHA_MAP["k"] = ["pentagon CYAN", "funkyShape ORANGE", "pentagon CYAN"];
   ALPHA_MAP["l"] = ["pentagon PURPLE", "triangle1 PURPLE", "pentagon PURPLE"];
-  ALPHA_MAP["m"] = ["funkyShape YELLOW", "pentagon PURPLE", "funkyShape YELLOW"];
+  ALPHA_MAP["m"] = ["funkyShape ORANGE", "pentagon PURPLE", "funkyShape ORANGE"];
   ALPHA_MAP["n"] = ["rectangle MAROON", "pentagon CYAN", "rectangle MAROON"];
   ALPHA_MAP["o"] = ["circle CYAN", "funkyShape MAROON", "circle CYAN"];
-  ALPHA_MAP["p"] = ["pentagon YELLOW", "circle PURPLE", "pentagon YELLOW"];
-  ALPHA_MAP["q"] = ["pentagon PURPLE", "pentagon CYAN", "pentagon YELLOW"];
+  ALPHA_MAP["p"] = ["pentagon ORANGE", "circle PURPLE", "pentagon ORANGE"];
+  ALPHA_MAP["q"] = ["pentagon PURPLE", "pentagon CYAN", "pentagon ORANGE"];
   ALPHA_MAP["r"] = ["funkyShape CYAN", "funkyShape PURPLE", "funkyShape CYAN"];
-  ALPHA_MAP["s"] = ["rectangle YELLOW", "rectangle MAROON", "rectangle YELLOW"];
+  ALPHA_MAP["s"] = ["rectangle ORANGE", "rectangle MAROON", "rectangle ORANGE"];
   ALPHA_MAP["t"] = ["rectangle CYAN", "triangle1 PINK", "triangle1 PINK"];
   ALPHA_MAP["u"] = ["funkyShape MAROON", "rectangle CYAN", "rectangle CYAN"];
   ALPHA_MAP["v"] = ["triangle1 PINK", "triangle1 PINK", "rectangle CYAN"];
-  ALPHA_MAP["w"] = ["rectangle YELLOW", "rectangle MAROON", "rectangle MAROON"];
+  ALPHA_MAP["w"] = ["rectangle ORANGE", "rectangle MAROON", "rectangle MAROON"];
   ALPHA_MAP["x"] = ["triangle1 MAROON", "triangle2 MAROON", "triangle1 MAROON"];
   ALPHA_MAP["y"] = ["circle PINK", "rectangle MAROON", "circle PINK"];
   ALPHA_MAP["z"] = ["circle MAROON", "circle MAROON", "circle MAROON"];
-  ALPHA_MAP[" "] = ["circle CYAN", "circle YELLOW", "circle PINK"];
+  ALPHA_MAP[" "] = ["circle CYAN", "circle ORANGE", "circle PINK"];
   ALPHA_MAP["."] = ["circle PURPLE", "triangle1 CYAN", "circle PURPLE"];
   ALPHA_MAP["?"] = ["circle PURPLE", "triangle1 MAROON", "circle PURPLE"];
   ALPHA_MAP["!"] = ["triangle1 CYAN", "circle PURPLE", "circle PURPLE"];
   ALPHA_MAP["0"] = ["rectangle MAROON", "rectangle MAROON", "pentagon PURPLE"];
   ALPHA_MAP["1"] = ["funkyShape CYAN", "rectangle PURPLE", "rectangle PURPLE"];
   ALPHA_MAP["2"] = ["pentagon CYAN", "funkyShape MAROON", "pentagon CYAN"];
-  ALPHA_MAP["3"] = ["rectangle YELLOW", "rectangle PINK", "rectangle YELLOW"];
+  ALPHA_MAP["3"] = ["rectangle ORANGE", "rectangle PINK", "rectangle ORANGE"];
   ALPHA_MAP["4"] = ["rectangle CYAN", "rectangle PURPLE", "rectangle CYAN"];
-  ALPHA_MAP["5"] = ["rectangle CYAN", "rectangle YELLOW", "rectangle CYAN"];
+  ALPHA_MAP["5"] = ["rectangle CYAN", "rectangle ORANGE", "rectangle CYAN"];
   ALPHA_MAP["6"] = ["circle CYAN", "rectangle MAROON", "rectangle MAROON"];
   ALPHA_MAP["7"] = ["rectangle PURPLE", "circle PURPLE", "circle PURPLE"];
   ALPHA_MAP["8"] = ["rectangle MAROON", "circle MAROON", "rectangle CYAN"];
@@ -338,75 +338,4 @@ function drawPentagon(x1, y1, fillColor) {
   }
   endShape(CLOSE);
   pop();
-}
-function drawTestShapes() {
-  drawTallRect(0, 0, MAROON);
-  drawTallRect(25, 0, PINK);
-  drawTallRect(50, 0, YELLOW);
-  drawTallRect(75, 0, CYAN);
-  drawTallRect(100, 0, PURPLE);
-  drawTallRect(125, 0, MAROON);
-  drawLongRect(0, 65, MAROON);
-  drawLongRect(25, 65, PINK);
-  drawLongRect(50, 65, YELLOW);
-  drawLongRect(75, 65, CYAN);
-  drawLongRect(100, 65, PURPLE);
-  drawLongRect(125, 65, MAROON);
-  drawTallTriangleD(0, 80, MAROON);
-  drawTallTriangleD(25, 80, PINK);
-  drawTallTriangleD(50, 80, YELLOW);
-  drawTallTriangleD(75, 80, CYAN);
-  drawTallTriangleD(100, 80, PURPLE);
-  drawTallTriangleD(125, 80, MAROON);
-  drawSquare(0, 140, MAROON);
-  drawSquare(25, 140, PINK);
-  drawSquare(50, 140, YELLOW);
-  drawSquare(75, 140, CYAN);
-  drawSquare(100, 140, PURPLE);
-  drawSquare(125, 140, MAROON);
-  drawTallTriangleU(0, 220, MAROON);
-  drawTallTriangleU(25, 220, PINK);
-  drawTallTriangleU(50, 220, YELLOW);
-  drawTallTriangleU(75, 220, CYAN);
-  drawTallTriangleU(100, 220, PURPLE);
-  drawTallTriangleU(125, 220, MAROON);
-  drawShortTriangleD(0, 225, MAROON);
-  drawShortTriangleD(25, 225, PINK);
-  drawShortTriangleD(50, 225, YELLOW);
-  drawShortTriangleD(75, 225, CYAN);
-  drawShortTriangleD(100, 225, PURPLE);
-  drawShortTriangleD(125, 225, MAROON);
-  drawSquare(0, 255, MAROON);
-  drawSquare(25, 255, PINK);
-  drawSquare(50, 255, YELLOW);
-  drawSquare(75, 255, CYAN);
-  drawSquare(100, 255, PURPLE);
-  drawSquare(125, 255, MAROON);
-  drawShortTriangleU(0, 305, MAROON);
-  drawShortTriangleU(25, 305, PINK);
-  drawShortTriangleU(50, 305, YELLOW);
-  drawShortTriangleU(75, 305, CYAN);
-  drawShortTriangleU(100, 305, PURPLE);
-  drawShortTriangleU(125, 305, MAROON);
-  drawCircle(10, 320, MAROON);
-  drawCircle(35, 320, PINK);
-  drawCircle(60, 320, YELLOW);
-  drawCircle(85, 320, CYAN);
-  drawCircle(110, 320, PURPLE);
-  drawCircle(135, 320, MAROON);
-  drawFunkyShape(0, 330, MAROON);
-  drawFunkyShape(25, 330, PINK);
-  drawFunkyShape(50, 330, YELLOW);
-  drawFunkyShape(75, 330, CYAN);
-  drawFunkyShape(100, 330, PURPLE);
-  drawFunkyShape(125, 330, MAROON);
-  drawPentagon(0, 365, MAROON);
-  drawPentagon(25, 365, PINK);
-  drawPentagon(50, 365, YELLOW);
-  drawPentagon(75, 365, CYAN);
-  drawPentagon(100, 365, PURPLE);
-  drawPentagon(125, 365, MAROON);
-  drawPentagon(75, 365, CYAN);
-  drawPentagon(100, 365, PURPLE);
-  drawPentagon(125, 365, MAROON);
 }
