@@ -1,13 +1,13 @@
-const INPUT = "abcdefghijklmnopqrstuvwxyz .?!0123456789"
+const INPUT = "smaller word"
 var ALPHA_MAP = {};
 var MAROON;
 var PINK;
-var ORANGE;
+var GREEN;
 var CYAN;
 var PURPLE;
 var ENCODED_MESSAGE;
 const N_COLS = 4;
-const N_ROWS = 40;
+const N_ROWS = 32;
 const X_DIM = 300;
 const Y_DIM = 2400;
 
@@ -19,7 +19,7 @@ function setup() {
   mapSetup();
   MAROON = color(128, 0, 0);
   PINK = color(252, 0, 172);
-  ORANGE = color(244, 176, 66);
+  GREEN = color(37, 163, 64);
   CYAN = color(65, 205, 225);
   PURPLE = color(137, 0, 150);
   processInput(INPUT);
@@ -86,8 +86,8 @@ function drawEncodedMessage(N_ROWS, N_COLS, offset) {
         case "CYAN":
           fillColor = CYAN;
           break;
-        case "ORANGE": 
-          fillColor = ORANGE;
+        case "GREEN": 
+          fillColor = GREEN;
           break;
       }
       shape = instr[0];
@@ -202,46 +202,36 @@ function drawEncodedMessage(N_ROWS, N_COLS, offset) {
 }
 
 function mapSetup() {
-  ALPHA_MAP["a"] = ["circle PURPLE", "circle ORANGE", "circle PURPLE"];
-  ALPHA_MAP["b"] = ["triangle1 PURPLE", "triangle2 CYAN", "triangle1 PURPLE"];
+  ALPHA_MAP["a"] = ["circle PURPLE", "circle GREEN", "circle PURPLE"];
+  ALPHA_MAP["b"] = ["rectangle MAROON", "rectangle MAROON", "pentagon PURPLE"];;
   ALPHA_MAP["c"] = ["triangle1 CYAN", "triangle2 PINK", "triangle1 CYAN"];
   ALPHA_MAP["d"] = ["triangle1 PINK", "triangle2 CYAN", "triangle1 PINK"];
-  ALPHA_MAP["e"] = ["funkyShape PURPLE", "circle ORANGE", "funkyShape PURPLE"];
+  ALPHA_MAP["e"] = ["funkyShape PURPLE", "circle GREEN", "funkyShape PURPLE"];
   ALPHA_MAP["f"] = ["rectangle MAROON", "rectangle PINK", "rectangle MAROON"];
   ALPHA_MAP["g"] = ["circle CYAN", "rectangle PINK", "rectangle PINK"];
-  ALPHA_MAP["h"] = ["funkyShape PURPLE", "funkyShape PINK", "funkyShape ORANGE"];
+  ALPHA_MAP["h"] = ["funkyShape PURPLE", "funkyShape PINK", "funkyShape GREEN"];
   ALPHA_MAP["i"] = ["pentagon MAROON", "rectangle PINK", "pentagon MAROON"];
-  ALPHA_MAP["j"] = ["triangle1 PURPLE", "triangle2 ORANGE", "triangle1 PURPLE"];
-  ALPHA_MAP["k"] = ["pentagon CYAN", "funkyShape ORANGE", "pentagon CYAN"];
+  ALPHA_MAP["j"] = ["triangle1 PURPLE", "triangle2 GREEN", "triangle1 PURPLE"];
+  ALPHA_MAP["k"] = ["pentagon CYAN", "funkyShape GREEN", "pentagon CYAN"];
   ALPHA_MAP["l"] = ["pentagon PURPLE", "triangle1 PURPLE", "pentagon PURPLE"];
-  ALPHA_MAP["m"] = ["funkyShape ORANGE", "pentagon PURPLE", "funkyShape ORANGE"];
+  ALPHA_MAP["m"] = ["funkyShape GREEN", "pentagon PURPLE", "funkyShape GREEN"];
   ALPHA_MAP["n"] = ["rectangle MAROON", "pentagon CYAN", "rectangle MAROON"];
   ALPHA_MAP["o"] = ["circle CYAN", "funkyShape MAROON", "circle CYAN"];
-  ALPHA_MAP["p"] = ["pentagon ORANGE", "circle PURPLE", "pentagon ORANGE"];
-  ALPHA_MAP["q"] = ["pentagon PURPLE", "pentagon CYAN", "pentagon ORANGE"];
+  ALPHA_MAP["p"] = ["pentagon GREEN", "circle PURPLE", "pentagon GREEN"];
+  ALPHA_MAP["q"] = ["pentagon PURPLE", "pentagon CYAN", "pentagon GREEN"];
   ALPHA_MAP["r"] = ["funkyShape CYAN", "funkyShape PURPLE", "funkyShape CYAN"];
-  ALPHA_MAP["s"] = ["rectangle ORANGE", "rectangle MAROON", "rectangle ORANGE"];
+  ALPHA_MAP["s"] = ["rectangle GREEN", "rectangle MAROON", "rectangle GREEN"];
   ALPHA_MAP["t"] = ["rectangle CYAN", "triangle1 PINK", "triangle1 PINK"];
   ALPHA_MAP["u"] = ["funkyShape MAROON", "rectangle CYAN", "rectangle CYAN"];
   ALPHA_MAP["v"] = ["triangle1 PINK", "triangle1 PINK", "rectangle CYAN"];
-  ALPHA_MAP["w"] = ["rectangle ORANGE", "rectangle MAROON", "rectangle MAROON"];
+  ALPHA_MAP["w"] = ["rectangle GREEN", "rectangle MAROON", "rectangle MAROON"];
   ALPHA_MAP["x"] = ["triangle1 MAROON", "triangle2 MAROON", "triangle1 MAROON"];
   ALPHA_MAP["y"] = ["circle PINK", "rectangle MAROON", "circle PINK"];
   ALPHA_MAP["z"] = ["circle MAROON", "circle MAROON", "circle MAROON"];
-  ALPHA_MAP[" "] = ["circle CYAN", "circle ORANGE", "circle PINK"];
+  ALPHA_MAP[" "] = ["circle CYAN", "circle GREEN", "circle PINK"];
   ALPHA_MAP["."] = ["circle PURPLE", "triangle1 CYAN", "circle PURPLE"];
   ALPHA_MAP["?"] = ["circle PURPLE", "triangle1 MAROON", "circle PURPLE"];
-  ALPHA_MAP["!"] = ["triangle1 CYAN", "circle PURPLE", "circle PURPLE"];
-  ALPHA_MAP["0"] = ["rectangle MAROON", "rectangle MAROON", "pentagon PURPLE"];
-  ALPHA_MAP["1"] = ["funkyShape CYAN", "rectangle PURPLE", "rectangle PURPLE"];
-  ALPHA_MAP["2"] = ["pentagon CYAN", "funkyShape MAROON", "pentagon CYAN"];
-  ALPHA_MAP["3"] = ["rectangle ORANGE", "rectangle PINK", "rectangle ORANGE"];
-  ALPHA_MAP["4"] = ["rectangle CYAN", "rectangle PURPLE", "rectangle CYAN"];
-  ALPHA_MAP["5"] = ["rectangle CYAN", "rectangle ORANGE", "rectangle CYAN"];
-  ALPHA_MAP["6"] = ["circle CYAN", "rectangle MAROON", "rectangle MAROON"];
-  ALPHA_MAP["7"] = ["rectangle PURPLE", "circle PURPLE", "circle PURPLE"];
-  ALPHA_MAP["8"] = ["rectangle MAROON", "circle MAROON", "rectangle CYAN"];
-  ALPHA_MAP["9"] = ["circle PURPLE", "circle PURPLE", "circle CYAN"];
+  ALPHA_MAP["!"] = ["triangle1 CYAN", "circle PURPLE", "circle PURPLE"];  
 }
 
 function getRandomInt(max) {
