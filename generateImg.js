@@ -1,5 +1,4 @@
-const INPUT = "smaller word"
-// abcdefghijklmnopqrstuvwxyz .!?
+// const INPUT_SIZE = 30;
 var ALPHA_MAP = {};
 var MAROON;
 var PINK;
@@ -13,7 +12,7 @@ const X_DIM = 300;
 const Y_DIM = 1920;
 
 function setup() {
-  createCanvas(X_DIM, Y_DIM);
+  z = createCanvas(X_DIM, Y_DIM);
   background(255, 255, 255);
   noStroke();
   noLoop();
@@ -23,24 +22,25 @@ function setup() {
   GREEN = color(37, 163, 64);
   BLUE = color(47, 50, 226);
   PURPLE = color(137, 0, 150);
-  processInput(INPUT);
+  processInput();
   // drawGrid();
   drawEncodedMessage(N_ROWS, N_COLS, 0);
-  saveCanvas("encodedImg", 'jpg');
+  save(z, 'myImage.jpg')
 }
 
-function processInput(inputString) {
-  var map = {
-        'a': 'q', 'b': 'w', 'c': 'e', 'd': 'r', 'e': 't', 'f': 'y','g': 'u', 
-        'h': 'i', 'i': 'o','j': 'p', 'k': 'a', 'l': 's','m': 'd', 'n': 'f', 
-        'o': 'g','p': 'h', 'q': 'j', 'r': 'k','s': 'l', 't': 'z', 'u': 'x',
-        'v': 'c', 'w': 'v', 'x': 'b','y': 'n', 'z': 'm', ' ': ' ', '.': '.', 
-        '?': '?', '!': '!', '0': '0', '1': '1', '2': '2', '3': '3', '4': '4', 
-        '5': '5', '6': '6', '7': '7', '8': '8', '9': '9',
-    };
-  var message = inputString.toLowerCase().split('').map((v)=>map[v]);
-  // no substition ciipher:
-  // var message = inputString.toLowerCase().split(''); 
+function processInput() {
+  const inputString = "hi?"
+  // var map = {
+  //       'a': 'q', 'b': 'w', 'c': 'e', 'd': 'r', 'e': 't', 'f': 'y','g': 'u', 
+  //       'h': 'i', 'i': 'o','j': 'p', 'k': 'a', 'l': 's','m': 'd', 'n': 'f', 
+  //       'o': 'g','p': 'h', 'q': 'j', 'r': 'k','s': 'l', 't': 'z', 'u': 'x',
+  //       'v': 'c', 'w': 'v', 'x': 'b','y': 'n', 'z': 'm', ' ': ' ', '.': '.', 
+  //       '?': '?', '!': '!', '0': '0', '1': '1', '2': '2', '3': '3', '4': '4', 
+  //       '5': '5', '6': '6', '7': '7', '8': '8', '9': '9',
+  //   };
+  // var message = inputString.toLowerCase().split('').map((v)=>map[v]);
+  // no substition cipher:
+  var message = inputString.toLowerCase().split(''); 
   ENCODED_MESSAGE = new Array(message.length);
   for (var i = 0; i < message.length; i++) {
     ENCODED_MESSAGE[i] = ALPHA_MAP[message[i]];
@@ -91,11 +91,13 @@ function drawEncodedMessage(N_ROWS, N_COLS, offset) {
           break;
       }
       shape = instr[0];
+      inc_height = 45;
       switch (shape) {
         case "circle":
           for (var x_offset = 0; x_offset < N_COLS; x_offset++) {
             drawCircle(x + 75 * x_offset, y, fillColor);
           }
+          inc_height = 45;
           break;
         case "triangle1":
           switch (randTriangle1) {
@@ -103,21 +105,25 @@ function drawEncodedMessage(N_ROWS, N_COLS, offset) {
               for (var x_offset = 0; x_offset < N_COLS; x_offset++) {
                 drawTallTriangleD(x + 75 * x_offset, y, fillColor);
               }
+              inc_height = 45;
               break;
             case 1:
               for (var x_offset = 0; x_offset < N_COLS; x_offset++) {
                 drawTallTriangleU(x + 75 * x_offset, y, fillColor);
               }
+              inc_height = 45;
               break;
             case 2:
               for (var x_offset = 0; x_offset < N_COLS; x_offset++) {
                 drawShortTriangleU(x + 75 * x_offset, y, fillColor);
               }
+              inc_height = 45;
               break;
             case 3:
               for (var x_offset = 0; x_offset < N_COLS; x_offset++) {
                 drawShortTriangleD(x + 75 * x_offset, y, fillColor);
-              }
+              }35
+              inc_height = 45;
               break; 
           }
           break;
@@ -127,76 +133,67 @@ function drawEncodedMessage(N_ROWS, N_COLS, offset) {
               for (var x_offset = 0; x_offset < N_COLS; x_offset++) {
                 drawTallTriangleD(x + 75 * x_offset, y, fillColor);
               }
+              inc_height = 45;
               break;
             case 1:
               for (var x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTallTriangleU(x + x_offset, y, fillColor);
+                drawTallTriangleU(x + 75 * x_offset, y, fillColor);
               }
+              inc_height = 45;
               break;
             case 2:
               for (var x_offset = 0; x_offset < N_COLS; x_offset++) {
                 drawShortTriangleU(x + 75 * x_offset, y, fillColor);
               }
+              inc_height = 45;
               break;
             case 3:
               for (var x_offset = 0; x_offset < N_COLS; x_offset++) {
                 drawShortTriangleD(x + 75 * x_offset, y, fillColor);
               }
+              inc_height = 45;
               break; 
           }
           break;
-        // case "tallTriangleD":
-        //   drawTallTriangleD(x, y, fillColor);
-        //   break;
-        // case "shortTriangleU":
-        //   drawShortTriangleU(x, y, fillColor);
-        //   break;
-        // case "shortTriangleD":
-        //   drawShortTriangleD(x, y, fillColor);
-        //   break;
         case "rectangle":
           switch (randRect) {
             case 0:
               for (var x_offset = 0; x_offset < N_COLS; x_offset++) {
                 drawTallRect(x + 75 * x_offset, y, fillColor);
               }
+              inc_height = 45;
               break;
             case 1:
               for (var x_offset = 0; x_offset < N_COLS; x_offset++) {
                 drawLongRect(x + 75 * x_offset, y, fillColor);
               }
+              inc_height = 45;
               break;
             case 2:
               for (var x_offset = 0; x_offset < N_COLS; x_offset++) {
                 drawSquare(x + 75 * x_offset, y, fillColor);
               }
+              inc_height = 45;
               break;
           }
           break;
-        // case "tallRectangle":
-        //   drawTallRect(x, y, fillColor);
-        //   break;
-        // case "longRectangle":
-        //   drawLongRect(x, y, fillColor);
-        //   break;
-        // case "square":
-        //   drawSquare(x, y, fillColor);
-        //   break;
         case "funkyShape":
           for (var x_offset = 0; x_offset < N_COLS; x_offset++) {
             drawFunkyShape(x + 75 * x_offset, y, fillColor);
           }
+          inc_height = 45;
           break;
         case "pentagon":
           for (var x_offset = 0; x_offset < N_COLS; x_offset++) {
             drawPentagon(x + 75 * x_offset, y, fillColor);
           }
+          inc_height = 45;
           break;
       }
       x += col_width / 3;
       instr = i.split(" ");
     });
-    y += row_height;
+    y += inc_height;
     x += width / N_ROWS / 2
   } 
 }
@@ -230,8 +227,8 @@ function mapSetup() {
   ALPHA_MAP["z"] = ["circle MAROON", "circle MAROON", "circle MAROON"];
   ALPHA_MAP[" "] = ["circle BLUE", "circle GREEN", "circle PINK"];
   ALPHA_MAP["."] = ["circle PURPLE", "triangle1 BLUE", "circle PURPLE"];
+  ALPHA_MAP["!"] = ["triangle1 BLUE", "circle GREEN", "circle PURPLE"];  
   ALPHA_MAP["?"] = ["circle PURPLE", "triangle1 MAROON", "circle PURPLE"];
-  ALPHA_MAP["!"] = ["triangle1 BLUE", "circle PURPLE", "circle PURPLE"];  
 }
 
 function getRandomInt(max) {
@@ -240,7 +237,7 @@ function getRandomInt(max) {
 
 function drawTallRect(x1, y1, fillColor) {
   const w = 20;
-  const h = 55;
+  const h = 40;
   fill(fillColor);
   rect(x1, y1, w, h);
 }
@@ -261,14 +258,14 @@ function drawSquare(x1, y1, fillColor) {
 }
 
 function drawTallTriangleD(x1, y1, fillColor) {
-  const h = 55;
+  const h = 40;
   const b = 20;
   fill(fillColor);
   triangle(x1, y1, x1 + b, y1, x1 + b / 2, y1 + h);
 }
 
 function drawTallTriangleU(x1, y1, fillColor) {
-  const h = 55;
+  const h = 40;
   const b = 20;
   y1 += h;
   fill(fillColor);
