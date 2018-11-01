@@ -8,6 +8,16 @@ color GREEN;
 color BLUE;
 color PURPLE;
 String[][] ENCODED_MESSAGE;
+int ENCODED_MESSAGE_LENGTH;
+//for(int k = 0; k < ENCODED_MESSAGE.length; k++){
+//    for(int j = 0; j < ENCODED_MESSAGE[k].length; j++){
+//        System.out.print(ENCODED_MESSAGE[k][j]);
+//        if(j < ENCODED_MESSAGE[k].length - 1) System.out.print(" ");
+//    }
+//    System.out.println();
+//  }
+  
+  
 int N_COLS = 4;
 int N_ROWS = 32;
 int X_DIM = 300;
@@ -30,14 +40,15 @@ void setup() {
 }
 
 String[][] processInput() {
-  String inputString = "abc";
-  String[][] encodedMessage = new String[inputString.length()][];
+  String inputString = "abcdef";
+  ENCODED_MESSAGE_LENGTH = inputString.length();
+  String[][] encodedMessage = new String[ENCODED_MESSAGE_LENGTH][];
   int i = 0;
   for (String c: inputString.toLowerCase().split("")) {
     //System.out.println((String[])ALPHA_MAP.get(c));
     encodedMessage[i] = (String[])ALPHA_MAP.get(c);
     i++;
-  }
+  }  
   return encodedMessage;
 }
 
@@ -53,7 +64,8 @@ void drawEncodedMessage() {
   int  n = rand.nextInt(50) + 1;
   int row_height = Y_DIM / N_ROWS;
   int col_width = X_DIM / N_COLS;
-  for (int j = 0; j < ENCODED_MESSAGE[0].length; j++) {
+  //System.out.println(ENCODED_MESSAGE[0][4]);
+  for (int j = 0; j < ENCODED_MESSAGE_LENGTH; j++) {    
     int randTriangle1 = new Random().nextInt(4); 
     int randTriangle2 = new Random().nextInt(4);
     int randRect = new Random().nextInt(3);
@@ -332,7 +344,7 @@ void drawPentagon(int x1, int y1, color fillColor) {
   fill(fillColor);
   int r = 10;
   pushMatrix();
-  translate(x1+r, y1);
+  translate(x1+r, y1 + 2*r);
   scale(1, -1);
   rotate(HALF_PI);
   beginShape();
