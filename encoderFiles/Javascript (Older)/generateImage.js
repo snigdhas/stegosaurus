@@ -1,4 +1,4 @@
-// const INPUT_SIZE = 30;
+ // const INPUT_SIZE = 30;
 var ALPHA_MAP = {};
 var MAROON;
 var PINK;
