@@ -1,3 +1,4 @@
+var exec = require('child_process').exec;
 var LCD = require('lcdi2c');
 var lcd = new LCD(1, 0x27);
 var readline = require('readline');
@@ -19,7 +20,7 @@ process.stdin.on('keypress', (str, key) => {
 		text = text.substring(0, text.length - 1);
 		displayText(text);
 	} else if (key.name === "return") {
-		print()
+		processText()
 	}
 	else {	
 		text += str;
@@ -48,16 +49,24 @@ function displayText(s) {
 }
 
 button.watch((err, val) => {
-	if (!pushed) print();
+	if (!pushed) processText();
 	if (pushed) pushed = false;
 	else pushed = true;
 })
 
-function print() {
-	console.log(text);
+function processText() {
+	// writes out to shell
+	
+	exec('processing-java --sketch="/home/pi/sketchbook/print_image" --run ' + text, (err, stdout, stderr) => {
+		        console.log(`stdout: ${stdout}`);
+		        console.log(`stderr: ${stderr}`);
+		        if (err !== null) {
+				            console.log(`exec error: ${err}`);
+				        }
+	});
+	console.log("printed");
 	text = "";
 	lcd.clear();
-	process.kill(process.pid, 'SIGINT');
 }
 
 process.stdin.on('keypress', (str, key) => {
