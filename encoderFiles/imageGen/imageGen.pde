@@ -9,19 +9,15 @@ color BLUE;
 color PURPLE;
 String[][] ENCODED_MESSAGE;
 int ENCODED_MESSAGE_LENGTH;
-//for(int k = 0; k < ENCODED_MESSAGE.length; k++){
-//    for(int j = 0; j < ENCODED_MESSAGE[k].length; j++){
-//        System.out.print(ENCODED_MESSAGE[k][j]);
-//        if(j < ENCODED_MESSAGE[k].length - 1) System.out.print(" ");
-//    }
-//    System.out.println();
-//  }
   
   
 int N_COLS = 4;
 int N_ROWS = 32;
 int X_DIM = 300;
 int Y_DIM = 1920;
+
+String inputString = "";
+String filepath = "/home/pi/stegosaurus/encoderFiles/imageGen/encodedmessage.jpg";
 
 void setup() {
   size(300, 1920);
@@ -36,11 +32,15 @@ void setup() {
   PURPLE = color(137, 0, 150);
   ENCODED_MESSAGE = processInput();
   drawEncodedMessage();
-  //drawTestShapes();
+  printEncodedMessage();
 }
 
 String[][] processInput() {
-  String inputString = "abcdef";
+  if (args != null && args.length > 0) {
+    for (int i = 0; i < args.length; i++) {
+      inputString += args[i] + " ";
+    }
+  }
   ENCODED_MESSAGE_LENGTH = inputString.length();
   String[][] encodedMessage = new String[ENCODED_MESSAGE_LENGTH][];
   int i = 0;
@@ -51,9 +51,6 @@ String[][] processInput() {
   }  
   return encodedMessage;
 }
-
-//void drawGrid() {
-//}
 
 void drawEncodedMessage() {
   int offset = 0;
@@ -353,6 +350,22 @@ void drawPentagon(int x1, int y1, color fillColor) {
   }
   endShape(CLOSE);
   popMatrix();
+}
+
+void printEncodedMessage() {
+  save("encodedmessage.jpg");
+  while (true) {
+    File f = dataFile(filepath);
+    if (f.exists()) {
+      try {
+        Runtime.getRuntime().exec("lp /home/pi/stegosaurus/encoderFiles/imageGen/encodedmessage.jpg");
+        break;
+      } catch (IOException e) {
+        println(e);
+      }
+      exit();
+    }
+  }
 }
 
 void drawTestShapes() {  
