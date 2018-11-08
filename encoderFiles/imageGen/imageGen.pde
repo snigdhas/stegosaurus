@@ -31,22 +31,24 @@ void setup() {
   BLUE = color(47, 50, 226);
   PURPLE = color(137, 0, 150);
   ENCODED_MESSAGE = processInput();
+  int canvasSize = (ENCODED_MESSAGE_LENGTH - 2) * 60; 
+  //surface.setSize(300, canvasSize);
   drawEncodedMessage();
   printEncodedMessage();
 }
 
 String[][] processInput() {
-  //if (args != null && args.length > 0) {
-  //  for (int i = 0; i < args.length; i++) {
-  //    inputString += args[i] + " ";
-  //  }
-  //}
-  inputString = "abcdefghijklmnopqrstuvwxyz ?!.";
+  if (args != null && args.length > 0) {
+    for (int i = 0; i < args.length; i++) {
+      inputString += args[i] + " ";
+    }
+  } else {
+    inputString = "abcdefghijklmnopqrs";
+  }
   ENCODED_MESSAGE_LENGTH = inputString.length();
   String[][] encodedMessage = new String[ENCODED_MESSAGE_LENGTH][];
   int i = 0;
   for (String c: inputString.toLowerCase().split("")) {
-    //System.out.println((String[])ALPHA_MAP.get(c));
     encodedMessage[i] = (String[])ALPHA_MAP.get(c);
     i++;
   }  
@@ -62,7 +64,6 @@ void drawEncodedMessage() {
   int  n = rand.nextInt(50) + 1;
   int row_height = Y_DIM / N_ROWS;
   int col_width = X_DIM / N_COLS;
-  //System.out.println(ENCODED_MESSAGE[0][4]);
   for (int j = 0; j < ENCODED_MESSAGE_LENGTH; j++) {    
     int randTriangle1 = new Random().nextInt(4); 
     int randTriangle2 = new Random().nextInt(4);
@@ -309,7 +310,7 @@ void drawShortTriangleD(int x1, int y1, color fillColor) {
 void drawShortTriangleU(int x1, int y1, color fillColor) {
   int h = 30;
   int b = 20;
-  y1 += 3 * h / 2;
+  y1 += h;
   fill(fillColor);
   triangle(x1, y1, x1 + b, y1, x1 + b / 2, y1 - h);
 }
@@ -317,7 +318,7 @@ void drawShortTriangleU(int x1, int y1, color fillColor) {
 void drawCircle(int x1, int y1, color fillColor) {
   int r = 20;
   fill(fillColor);
-  ellipse(x1 + r / 2, y1 + 3 / 2 * r, r, r);
+  ellipse(x1 + r / 2, y1 + 1.5 * r, r, r);
 }
 
 void drawFunkyShape(int x1, int y1, color fillColor) {
@@ -342,7 +343,7 @@ void drawPentagon(int x1, int y1, color fillColor) {
   fill(fillColor);
   int r = 10;
   pushMatrix();
-  translate(x1+r, y1 + 2*r);
+  translate(x1+r, y1 + 3 * r);
   scale(1, -1);
   rotate(HALF_PI);
   beginShape();
