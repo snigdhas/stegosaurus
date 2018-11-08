@@ -8,11 +8,14 @@ with open('alphamap.csv') as csv_file:
 # print(alphamap)
 
 message = ""
-with open('encodedImage.csv') as csv_file:
+shapeArray = []
+with open('filename.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     for row in csv_reader:
-        charEncoding = [row[0], row[1], row[2]]
-        for key in alphamap:
-            if alphamap[key] == charEncoding:
-                message += key
-print(message)h
+        for column in row:
+          a = column.split(',')[2:]
+          shape = ""
+          for attr in a:
+              shape += attr.strip(" \'").strip("\')") + " "
+          shapeArray.append(shape.strip(" "))
+print(shapeArray)

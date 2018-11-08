@@ -14,18 +14,18 @@ int ENCODED_MESSAGE_LENGTH;
 int N_COLS = 4;
 int N_ROWS = 32;
 int X_DIM = 300;
-int Y_DIM = 450;
+int Y_DIM = 1920;
 
 String inputString = "";
 String filepath = "/home/pi/stegosaurus/encoderFiles/imageGen/encodedmessage.jpg";
 
 void setup() {
-  size(300, 450);
+  size(300, 1920);
   background(255, 255, 255);
   noStroke();
   noLoop();
   mapSetup();
-  MAROON = color(128, 0, 0);
+  MAROON = color(150, 0, 0);
   PINK = color(244, 66, 140);
   GREEN = color(37, 163, 64);
   BLUE = color(47, 50, 226);
@@ -36,12 +36,12 @@ void setup() {
 }
 
 String[][] processInput() {
-  if (args != null && args.length > 0) {
-    for (int i = 0; i < args.length; i++) {
-      inputString += args[i] + " ";
-    }
-  }
-  //inputString = "abcdefghijk";
+  //if (args != null && args.length > 0) {
+  //  for (int i = 0; i < args.length; i++) {
+  //    inputString += args[i] + " ";
+  //  }
+  //}
+  inputString = "abcdefghijklmnopqrstuvwxyz ?!.";
   ENCODED_MESSAGE_LENGTH = inputString.length();
   String[][] encodedMessage = new String[ENCODED_MESSAGE_LENGTH][];
   int i = 0;
