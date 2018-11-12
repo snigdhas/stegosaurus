@@ -14,13 +14,13 @@ int ENCODED_MESSAGE_LENGTH;
 int N_COLS = 4;
 int N_ROWS = 32;
 int X_DIM = 300;
-int Y_DIM = 1920;
+int Y_DIM = 990;
 
 String inputString = "";
 String filepath = "/home/pi/stegosaurus/encoderFiles/imageGen/encodedmessage.jpg";
 
 void setup() {
-  size(300, 1920);
+  size(300, 990);
   background(255, 255, 255);
   noStroke();
   noLoop();
@@ -31,8 +31,8 @@ void setup() {
   BLUE = color(47, 50, 226);
   PURPLE = color(137, 0, 150);
   ENCODED_MESSAGE = processInput();
-  int canvasSize = (ENCODED_MESSAGE_LENGTH - 2) * 60; 
-  //surface.setSize(300, canvasSize);
+  int canvasSize = (ENCODED_MESSAGE_LENGTH) * 30; 
+  surface.setSize(300, canvasSize); // comment out to stop canvas resize
   drawEncodedMessage();
   printEncodedMessage();
 }
@@ -43,7 +43,7 @@ String[][] processInput() {
       inputString += args[i] + " ";
     }
   } else {
-    inputString = "abcdefghijklmnopqrs";
+    inputString = " .?!zz";
   }
   ENCODED_MESSAGE_LENGTH = inputString.length();
   String[][] encodedMessage = new String[ENCODED_MESSAGE_LENGTH][];
@@ -68,7 +68,7 @@ void drawEncodedMessage() {
     int randTriangle1 = new Random().nextInt(4); 
     int randTriangle2 = new Random().nextInt(4);
     int randRect = new Random().nextInt(3);
-    int inc_height = 45;
+    int inc_height = 30;
     String[] code = ENCODED_MESSAGE[j];
     x = offset;
     for (int k = 0; k < code.length; k++) {
@@ -96,83 +96,72 @@ void drawEncodedMessage() {
           for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
             drawCircle(x + 75 * x_offset, y, fillColor);
           }
-          inc_height = 45;
           break;
         case "triangle1":
           switch (randTriangle1) {
             case 0:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTallTriangleD(x + 75 * x_offset, y, fillColor);
+                drawTriangleU(x + 75 * x_offset, y, fillColor);
               }
-              inc_height = 45;
               break;
             case 1:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTallTriangleU(x + 75 * x_offset, y, fillColor);
+                drawTriangleD(x + 75 * x_offset, y, fillColor);
               }
-              inc_height = 45;
               break;
             case 2:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawShortTriangleU(x + 75 * x_offset, y, fillColor);
+                drawTriangleR(x + 75 * x_offset, y, fillColor);
               }
-              inc_height = 45;
               break;
             case 3:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawShortTriangleD(x + 75 * x_offset, y, fillColor);
+                drawTriangleL(x + 75 * x_offset, y, fillColor);
               }
-              inc_height = 45;
-              break; 
+              break;
           }
           break;
         case "triangle2":
           switch (randTriangle2) {
             case 0:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTallTriangleD(x + 75 * x_offset, y, fillColor);
+                drawTriangleU(x + 75 * x_offset, y, fillColor);
               }
-              inc_height = 45;
               break;
             case 1:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTallTriangleU(x + 75 * x_offset, y, fillColor);
+                drawTriangleD(x + 75 * x_offset, y, fillColor);
               }
-              inc_height = 45;
               break;
             case 2:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawShortTriangleU(x + 75 * x_offset, y, fillColor);
+                drawTriangleR(x + 75 * x_offset, y, fillColor);
               }
-              inc_height = 45;
               break;
             case 3:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawShortTriangleD(x + 75 * x_offset, y, fillColor);
+                drawTriangleL(x + 75 * x_offset, y, fillColor);
               }
-              inc_height = 45;
-              break; 
+              break;
           }
           break;
         case "rectangle":
           switch (randRect) {
             case 0:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTallRect(x + 75 * x_offset, y, fillColor);
+                drawSquare(x + 75 * x_offset, y, fillColor);
               }
-              inc_height = 45;
               break;
             case 1:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
                 drawLongRect(x + 75 * x_offset, y, fillColor);
               }
-              inc_height = 45;
               break;
             case 2:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawSquare(x + 75 * x_offset, y, fillColor);
+                drawTallRect(x + 75 * x_offset, y, fillColor);
               }
-              inc_height = 45;
+              inc_height = 35;
               break;
           }
           break;
@@ -180,13 +169,11 @@ void drawEncodedMessage() {
           for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
             drawFunkyShape(x + 75 * x_offset, y, fillColor);
           }
-          inc_height = 45;
           break;
         case "pentagon":
           for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
             drawPentagon(x + 75 * x_offset, y, fillColor);
           }
-          inc_height = 45;
           break;
       }
       x += col_width / 3;
@@ -265,7 +252,7 @@ HashMap<String, String[]> mapSetup() {
 
 void drawTallRect(int x1, int y1, color fillColor) {
   int w = 20;
-  int h = 40;
+  int h = 30;
   fill(fillColor);
   rect(x1, y1, w, h);
 }
@@ -273,7 +260,6 @@ void drawTallRect(int x1, int y1, color fillColor) {
 void drawLongRect(int x1, int y1, color fillColor) {
   int w = 20;
   int h = 10;
-  y1 += w;
   fill(fillColor);
   rect(x1, y1, w, h);
 }
@@ -282,49 +268,47 @@ void drawSquare(int x1, int y1, color fillColor) {
   int w = 20;
   int h = 20;
   fill(fillColor);
-  rect(x1, y1 + h, w, h);
+  rect(x1, y1, w, h);
 }
 
-void drawTallTriangleD(int x1, int y1, color fillColor) {
-  int h = 40;
+void drawTriangleR(int x1, int y1, color fillColor) {
+  int h = 20;
+  int b = 20;
+  fill(fillColor);
+  triangle(x1, y1, x1, y1 + h, x1 + b, y1 + h / 2);
+}
+
+void drawTriangleL(int x1, int y1, color fillColor) {
+  int h = 20;
+  int b = 20;
+  fill(fillColor);
+  triangle(x1 + b, y1, x1 + b, y1 + h, x1, y1 + h / 2);
+}
+
+void drawTriangleD(int x1, int y1, color fillColor) {
+  int h = 20;
   int b = 20;
   fill(fillColor);
   triangle(x1, y1, x1 + b, y1, x1 + b / 2, y1 + h);
 }
 
-void drawTallTriangleU(int x1, int y1, color fillColor) {
-  int h = 40;
-  int b = 20;
-  y1 += h;
-  fill(fillColor);
-  triangle(x1, y1, x1 + b, y1, x1 + b / 2, y1 - h);
-}
-
-void drawShortTriangleD(int x1, int y1, color fillColor) {
-  int h = 30;
+void drawTriangleU(int x1, int y1, color fillColor) {
+  int h = 20;
   int b = 20;
   fill(fillColor);
-  triangle(x1, y1, x1 + b, y1, x1 + b / 2, y1 + h);
-}
-
-void drawShortTriangleU(int x1, int y1, color fillColor) {
-  int h = 30;
-  int b = 20;
-  y1 += h;
-  fill(fillColor);
-  triangle(x1, y1, x1 + b, y1, x1 + b / 2, y1 - h);
+  triangle(x1, y1 + h, x1 + b, y1 + h, x1 + b / 2, y1);
 }
 
 void drawCircle(int x1, int y1, color fillColor) {
   int r = 20;
   fill(fillColor);
-  ellipse(x1 + r / 2, y1 + 1.5 * r, r, r);
+  ellipse(x1 + r / 2, y1 + r / 2, r, r);
 }
 
 void drawFunkyShape(int x1, int y1, color fillColor) {
   int w = 20;
   int h = 20;
-  y1 += h;
+  //y1 += h / 2;
   fill(fillColor);
   beginShape();
   vertex(x1, y1);
@@ -343,7 +327,7 @@ void drawPentagon(int x1, int y1, color fillColor) {
   fill(fillColor);
   int r = 10;
   pushMatrix();
-  translate(x1+r, y1 + 3 * r);
+  translate(x1 + r, y1 + r);
   scale(1, -1);
   rotate(HALF_PI);
   beginShape();
@@ -383,42 +367,42 @@ void drawTestShapes() {
   drawLongRect(75, 65, BLUE);
   drawLongRect(100, 65, PURPLE);
   drawLongRect(125, 65, MAROON);
-  drawTallTriangleD(0, 80, MAROON); 
-  drawTallTriangleD(25, 80, PINK);
-  drawTallTriangleD(50, 80, GREEN);
-  drawTallTriangleD(75, 80, BLUE);
-  drawTallTriangleD(100, 80, PURPLE);
-  drawTallTriangleD(125, 80, MAROON);
+  drawTriangleR(0, 80, MAROON); 
+  drawTriangleR(25, 80, PINK);
+  drawTriangleR(50, 80, GREEN);
+  drawTriangleR(75, 80, BLUE);
+  drawTriangleR(100, 80, PURPLE);
+  drawTriangleR(125, 80, MAROON);
   drawSquare(0, 140, MAROON); 
   drawSquare(25, 140, PINK);
   drawSquare(50, 140, GREEN);
   drawSquare(75, 140, BLUE);
   drawSquare(100, 140, PURPLE);
   drawSquare(125, 140, MAROON);
-  drawTallTriangleU(0, 220, MAROON); 
-  drawTallTriangleU(25, 220, PINK);
-  drawTallTriangleU(50, 220, GREEN);
-  drawTallTriangleU(75, 220, BLUE);
-  drawTallTriangleU(100, 220, PURPLE);
-  drawTallTriangleU(125, 220, MAROON);
-  drawShortTriangleD(0, 225, MAROON); 
-  drawShortTriangleD(25, 225, PINK);
-  drawShortTriangleD(50, 225, GREEN);
-  drawShortTriangleD(75, 225, BLUE);
-  drawShortTriangleD(100, 225, PURPLE);
-  drawShortTriangleD(125, 225, MAROON);
+  drawTriangleL(0, 220, MAROON); 
+  drawTriangleL(25, 220, PINK);
+  drawTriangleL(50, 220, GREEN);
+  drawTriangleL(75, 220, BLUE);
+  drawTriangleL(100, 220, PURPLE);
+  drawTriangleL(125, 220, MAROON);
+  drawTriangleD(0, 225, MAROON); 
+  drawTriangleD(25, 225, PINK);
+  drawTriangleD(50, 225, GREEN);
+  drawTriangleD(75, 225, BLUE);
+  drawTriangleD(100, 225, PURPLE);
+  drawTriangleD(125, 225, MAROON);
   drawSquare(0, 255, MAROON); 
   drawSquare(25, 255, PINK);
   drawSquare(50, 255, GREEN);
   drawSquare(75, 255, BLUE);
   drawSquare(100, 255, PURPLE);
   drawSquare(125, 255, MAROON);
-  drawShortTriangleU(0, 305, MAROON); 
-  drawShortTriangleU(25, 305, PINK);
-  drawShortTriangleU(50, 305, GREEN);
-  drawShortTriangleU(75, 305, BLUE);
-  drawShortTriangleU(100, 305, PURPLE);
-  drawShortTriangleU(125, 305, MAROON);
+  drawTriangleU(0, 305, MAROON); 
+  drawTriangleU(25, 305, PINK);
+  drawTriangleU(50, 305, GREEN);
+  drawTriangleU(75, 305, BLUE);
+  drawTriangleU(100, 305, PURPLE);
+  drawTriangleU(125, 305, MAROON);
   drawCircle(10, 320, MAROON);
   drawCircle(35, 320, PINK);
   drawCircle(60, 320, GREEN);
