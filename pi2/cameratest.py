@@ -10,7 +10,7 @@ camera.hflip = True
 output = '/home/pi/Desktop/image.jpg';
 
 camera.start_preview()
-camera.preview.alpha = 0
+camera.preview.alpha = 255
 
 def take_picture():
     camera.capture(output)
