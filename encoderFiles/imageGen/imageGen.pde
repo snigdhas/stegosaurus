@@ -31,8 +31,8 @@ void setup() {
   BLUE = color(47, 50, 226);
   PURPLE = color(137, 0, 150);
   ENCODED_MESSAGE = processInput();
-  int canvasSize = (ENCODED_MESSAGE_LENGTH) * 30; 
-  surface.setSize(300, canvasSize); // comment out to stop canvas resize
+  //int canvasSize = (ENCODED_MESSAGE_LENGTH) * 30; 
+  //surface.setSize(300, canvasSize); // comment out to stop canvas resize
   drawEncodedMessage();
   printEncodedMessage();
 }
@@ -43,7 +43,7 @@ String[][] processInput() {
       inputString += args[i] + " ";
     }
   } else {
-    inputString = " .?!zz";
+    inputString = "abcdefghijklmnopqrstuvwxyz .!?zz";
   }
   ENCODED_MESSAGE_LENGTH = inputString.length();
   String[][] encodedMessage = new String[ENCODED_MESSAGE_LENGTH][];
@@ -59,10 +59,6 @@ void drawEncodedMessage() {
   int offset = 0;
   int x = offset;
   int y = 0;
-  Random rand = new Random();
- 
-  int  n = rand.nextInt(50) + 1;
-  int row_height = Y_DIM / N_ROWS;
   int col_width = X_DIM / N_COLS;
   for (int j = 0; j < ENCODED_MESSAGE_LENGTH; j++) {    
     int randTriangle1 = new Random().nextInt(4); 
@@ -273,28 +269,30 @@ void drawSquare(int x1, int y1, color fillColor) {
 
 void drawTriangleR(int x1, int y1, color fillColor) {
   int h = 20;
-  int b = 20;
+  float b = (h / 2) * sqrt(3); 
   fill(fillColor);
+  x1 += 2;
   triangle(x1, y1, x1, y1 + h, x1 + b, y1 + h / 2);
 }
 
 void drawTriangleL(int x1, int y1, color fillColor) {
   int h = 20;
-  int b = 20;
+  float b = (h / 2) * sqrt(3);
+  x1 += 1;
   fill(fillColor);
   triangle(x1 + b, y1, x1 + b, y1 + h, x1, y1 + h / 2);
 }
 
 void drawTriangleD(int x1, int y1, color fillColor) {
-  int h = 20;
   int b = 20;
+  float h = (b / 2) * sqrt(3);
   fill(fillColor);
   triangle(x1, y1, x1 + b, y1, x1 + b / 2, y1 + h);
 }
 
 void drawTriangleU(int x1, int y1, color fillColor) {
-  int h = 20;
   int b = 20;
+  float h = (b / 2) * sqrt(3);
   fill(fillColor);
   triangle(x1, y1 + h, x1 + b, y1 + h, x1 + b / 2, y1);
 }
@@ -308,7 +306,6 @@ void drawCircle(int x1, int y1, color fillColor) {
 void drawFunkyShape(int x1, int y1, color fillColor) {
   int w = 20;
   int h = 20;
-  //y1 += h / 2;
   fill(fillColor);
   beginShape();
   vertex(x1, y1);
