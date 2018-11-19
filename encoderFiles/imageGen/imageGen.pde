@@ -20,7 +20,8 @@ String inputString = "";
 String filepath = "/home/pi/stegosaurus/encoderFiles/imageGen/encodedmessage.jpg";
 
 void setup() {
-  size(300, 990);
+  size(1250, 4124);
+  scale(4.166);
   background(255, 255, 255);
   noStroke();
   noLoop();
@@ -43,7 +44,7 @@ String[][] processInput() {
       inputString += args[i] + " ";
     }
   } else {
-    inputString = "abcdefghijklmnopqrstuvwxyz .!?zz";
+    inputString = "hello world";
   }
   ENCODED_MESSAGE_LENGTH = inputString.length();
   String[][] encodedMessage = new String[ENCODED_MESSAGE_LENGTH][];
