@@ -9,20 +9,22 @@ color BLUE;
 color PURPLE;
 String[][] ENCODED_MESSAGE;
 int ENCODED_MESSAGE_LENGTH;
-  
-  
-int N_COLS = 4;
+    
+int N_COLS = 8;
 int N_ROWS = 32;
-int X_DIM = 300;
+int X_DIM = 600;
 int Y_DIM = 990;
 
 String inputString = "";
 String filepath = "/home/pi/stegosaurus/encoderFiles/imageGen/encodedmessage.jpg";
 
 void setup() {
-  size(1250, 4124);
+  size(2800, 4144);
   scale(4.166);
   background(255, 255, 255);
+  stroke(0);
+  line(2, 2, 660, 2);
+  line(2, 8, 660, 8);
   noStroke();
   noLoop();
   mapSetup();
@@ -44,7 +46,7 @@ String[][] processInput() {
       inputString += args[i] + " ";
     }
   } else {
-    inputString = "hello world";
+    inputString = "abcdefghijklmnopqrstuvwxyz .!?zz";
   }
   ENCODED_MESSAGE_LENGTH = inputString.length();
   String[][] encodedMessage = new String[ENCODED_MESSAGE_LENGTH][];
@@ -57,15 +59,16 @@ String[][] processInput() {
 }
 
 void drawEncodedMessage() {
-  int offset = 0;
+  int offset = 10;
   int x = offset;
-  int y = 0;
+  int y = 15;
   int col_width = X_DIM / N_COLS;
   for (int j = 0; j < ENCODED_MESSAGE_LENGTH; j++) {    
     int randTriangle1 = new Random().nextInt(4); 
     int randTriangle2 = new Random().nextInt(4);
     int randRect = new Random().nextInt(3);
     int inc_height = 30;
+    int inc_width = 80;
     String[] code = ENCODED_MESSAGE[j];
     x = offset;
     for (int k = 0; k < code.length; k++) {
@@ -91,29 +94,29 @@ void drawEncodedMessage() {
       switch (shape) {
         case "circle":
           for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-            drawCircle(x + 75 * x_offset, y, fillColor);
+            drawCircle(x + inc_width * x_offset, y, fillColor);
           }
           break;
         case "triangle1":
           switch (randTriangle1) {
             case 0:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTriangleU(x + 75 * x_offset, y, fillColor);
+                drawTriangleU(x + inc_width * x_offset, y, fillColor);
               }
               break;
             case 1:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTriangleD(x + 75 * x_offset, y, fillColor);
+                drawTriangleD(x + inc_width * x_offset, y, fillColor);
               }
               break;
             case 2:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTriangleR(x + 75 * x_offset, y, fillColor);
+                drawTriangleR(x + inc_width * x_offset, y, fillColor);
               }
               break;
             case 3:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTriangleL(x + 75 * x_offset, y, fillColor);
+                drawTriangleL(x + inc_width * x_offset, y, fillColor);
               }
               break;
           }
@@ -122,22 +125,22 @@ void drawEncodedMessage() {
           switch (randTriangle2) {
             case 0:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTriangleU(x + 75 * x_offset, y, fillColor);
+                drawTriangleU(x + inc_width * x_offset, y, fillColor);
               }
               break;
             case 1:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTriangleD(x + 75 * x_offset, y, fillColor);
+                drawTriangleD(x + inc_width * x_offset, y, fillColor);
               }
               break;
             case 2:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTriangleR(x + 75 * x_offset, y, fillColor);
+                drawTriangleR(x + inc_width * x_offset, y, fillColor);
               }
               break;
             case 3:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTriangleL(x + 75 * x_offset, y, fillColor);
+                drawTriangleL(x + inc_width * x_offset, y, fillColor);
               }
               break;
           }
@@ -146,38 +149,38 @@ void drawEncodedMessage() {
           switch (randRect) {
             case 0:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawSquare(x + 75 * x_offset, y, fillColor);
+                drawSquare(x + inc_width * x_offset, y, fillColor);
               }
               break;
             case 1:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawLongRect(x + 75 * x_offset, y, fillColor);
+                drawLongRect(x + inc_width * x_offset, y, fillColor);
               }
               break;
             case 2:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTallRect(x + 75 * x_offset, y, fillColor);
+                drawTallRect(x + inc_width * x_offset, y, fillColor);
               }
               inc_height = 35;
               break;
           }
           break;
-        case "funkyShape":
+        case "star":
           for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-            drawFunkyShape(x + 75 * x_offset, y, fillColor);
+            drawStar(x + inc_width * x_offset, y, fillColor);
           }
           break;
         case "pentagon":
           for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-            drawPentagon(x + 75 * x_offset, y, fillColor);
+            drawPentagon(x + inc_width * x_offset, y, fillColor);
           }
           break;
       }
-      x += col_width / 3;
+      x += inc_width / 3;
       instr = i.split(" ");
     }
     y += inc_height;
-    x += width / N_ROWS / 2;
+    x += (4.166 * X_DIM) / N_ROWS / 2;
   } 
 }
 
@@ -186,23 +189,23 @@ HashMap<String, String[]> mapSetup() {
   String[] b_string = {"rectangle MAROON", "rectangle MAROON", "pentagon PURPLE"};
   String[] c_string = {"triangle1 BLUE", "triangle2 PINK", "triangle1 BLUE"};
   String[] d_string = {"triangle1 PINK", "triangle2 BLUE", "triangle1 PINK"};
-  String[] e_string = {"funkyShape PURPLE", "circle GREEN", "funkyShape PURPLE"};
+  String[] e_string = {"star PURPLE", "circle GREEN", "star PURPLE"};
   String[] f_string = {"rectangle MAROON", "rectangle PINK", "rectangle MAROON"};
   String[] g_string = {"circle BLUE", "rectangle PINK", "rectangle PINK"};
-  String[] h_string = {"funkyShape PURPLE", "funkyShape PINK", "funkyShape GREEN"};
+  String[] h_string = {"star PURPLE", "star PINK", "star GREEN"};
   String[] i_string = {"pentagon MAROON", "rectangle PINK", "pentagon MAROON"};
   String[] j_string = {"triangle1 PURPLE", "triangle2 GREEN", "triangle1 PURPLE"};
-  String[] k_string = {"pentagon BLUE", "funkyShape GREEN", "pentagon BLUE"};
+  String[] k_string = {"pentagon BLUE", "star GREEN", "pentagon BLUE"};
   String[] l_string = {"pentagon PURPLE", "triangle1 PURPLE", "pentagon PURPLE"};
-  String[] m_string = {"funkyShape GREEN", "pentagon PURPLE", "funkyShape GREEN"};
+  String[] m_string = {"star GREEN", "pentagon PURPLE", "star GREEN"};
   String[] n_string = {"rectangle MAROON", "pentagon BLUE", "rectangle MAROON"};
-  String[] o_string = {"circle BLUE", "funkyShape MAROON", "circle BLUE"};
+  String[] o_string = {"circle BLUE", "star MAROON", "circle BLUE"};
   String[] p_string = {"pentagon GREEN", "circle PURPLE", "pentagon GREEN"};
   String[] q_string = {"pentagon PURPLE", "pentagon BLUE", "pentagon GREEN"};
-  String[] r_string = {"funkyShape BLUE", "funkyShape PURPLE", "funkyShape BLUE"};
+  String[] r_string = {"star BLUE", "star PURPLE", "star BLUE"};
   String[] s_string = {"rectangle GREEN", "rectangle MAROON", "rectangle GREEN"};
   String[] t_string = {"rectangle BLUE", "triangle1 PINK", "triangle1 PINK"};
-  String[] u_string = {"funkyShape MAROON", "rectangle BLUE", "rectangle BLUE"};
+  String[] u_string = {"star MAROON", "rectangle BLUE", "rectangle BLUE"};
   String[] v_string = {"triangle1 PINK", "triangle1 PINK", "rectangle BLUE"};
   String[] w_string = {"rectangle GREEN", "rectangle MAROON", "rectangle MAROON"};
   String[] x_string = {"triangle1 MAROON", "triangle2 MAROON", "triangle1 MAROON"};
@@ -279,7 +282,7 @@ void drawTriangleR(int x1, int y1, color fillColor) {
 void drawTriangleL(int x1, int y1, color fillColor) {
   int h = 20;
   float b = (h / 2) * sqrt(3);
-  x1 += 1;
+  x1 += 2;
   fill(fillColor);
   triangle(x1 + b, y1, x1 + b, y1 + h, x1, y1 + h / 2);
 }
@@ -304,7 +307,7 @@ void drawCircle(int x1, int y1, color fillColor) {
   ellipse(x1 + r / 2, y1 + r / 2, r, r);
 }
 
-void drawFunkyShape(int x1, int y1, color fillColor) {
+void drawStar(int x1, int y1, color fillColor) {
   int w = 20;
   int h = 20;
   fill(fillColor);
@@ -356,49 +359,49 @@ void drawTestShapes() {
   drawTallRect(0, 0, MAROON);
   drawTallRect(25, 0, PINK);
   drawTallRect(50, 0, GREEN);
-  drawTallRect(75, 0, BLUE);
+  drawTallRect(80, 0, BLUE);
   drawTallRect(100, 0, PURPLE);
   drawTallRect(125, 0, MAROON);
   drawLongRect(0, 65, MAROON);
   drawLongRect(25, 65, PINK);
   drawLongRect(50, 65, GREEN);
-  drawLongRect(75, 65, BLUE);
+  drawLongRect(80, 65, BLUE);
   drawLongRect(100, 65, PURPLE);
   drawLongRect(125, 65, MAROON);
   drawTriangleR(0, 80, MAROON); 
   drawTriangleR(25, 80, PINK);
   drawTriangleR(50, 80, GREEN);
-  drawTriangleR(75, 80, BLUE);
+  drawTriangleR(80, 80, BLUE);
   drawTriangleR(100, 80, PURPLE);
   drawTriangleR(125, 80, MAROON);
   drawSquare(0, 140, MAROON); 
   drawSquare(25, 140, PINK);
   drawSquare(50, 140, GREEN);
-  drawSquare(75, 140, BLUE);
+  drawSquare(80, 140, BLUE);
   drawSquare(100, 140, PURPLE);
   drawSquare(125, 140, MAROON);
   drawTriangleL(0, 220, MAROON); 
   drawTriangleL(25, 220, PINK);
   drawTriangleL(50, 220, GREEN);
-  drawTriangleL(75, 220, BLUE);
+  drawTriangleL(80, 220, BLUE);
   drawTriangleL(100, 220, PURPLE);
   drawTriangleL(125, 220, MAROON);
   drawTriangleD(0, 225, MAROON); 
   drawTriangleD(25, 225, PINK);
   drawTriangleD(50, 225, GREEN);
-  drawTriangleD(75, 225, BLUE);
+  drawTriangleD(80, 225, BLUE);
   drawTriangleD(100, 225, PURPLE);
   drawTriangleD(125, 225, MAROON);
   drawSquare(0, 255, MAROON); 
   drawSquare(25, 255, PINK);
   drawSquare(50, 255, GREEN);
-  drawSquare(75, 255, BLUE);
+  drawSquare(80, 255, BLUE);
   drawSquare(100, 255, PURPLE);
   drawSquare(125, 255, MAROON);
   drawTriangleU(0, 305, MAROON); 
   drawTriangleU(25, 305, PINK);
   drawTriangleU(50, 305, GREEN);
-  drawTriangleU(75, 305, BLUE);
+  drawTriangleU(80, 305, BLUE);
   drawTriangleU(100, 305, PURPLE);
   drawTriangleU(125, 305, MAROON);
   drawCircle(10, 320, MAROON);
@@ -407,16 +410,16 @@ void drawTestShapes() {
   drawCircle(85, 320, BLUE);
   drawCircle(110, 320, PURPLE);
   drawCircle(135, 320, MAROON);
-  drawFunkyShape(0, 330, MAROON);
-  drawFunkyShape(25, 330, PINK);
-  drawFunkyShape(50, 330, GREEN);
-  drawFunkyShape(75, 330, BLUE);
-  drawFunkyShape(100, 330, PURPLE);
-  drawFunkyShape(125, 330, MAROON);
+  drawStar(0, 330, MAROON);
+  drawStar(25, 330, PINK);
+  drawStar(50, 330, GREEN);
+  drawStar(80, 330, BLUE);
+  drawStar(100, 330, PURPLE);
+  drawStar(125, 330, MAROON);
   drawPentagon(0, 365, MAROON);
   drawPentagon(25, 365, PINK);
   drawPentagon(50, 365, GREEN);
-  drawPentagon(75, 365, BLUE);
+  drawPentagon(80, 365, BLUE);
   drawPentagon(100, 365, PURPLE);
   drawPentagon(125, 365, MAROON);
 }

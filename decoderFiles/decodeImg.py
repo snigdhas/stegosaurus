@@ -8,11 +8,12 @@ alphamap = {}
 with open('alphamap.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     for row in csv_reader:
-        alphamap[row[0]] = [row[1].lower(), row[2].lower(), row[3].lower()]
+        encoding = ', '.join([row[1].lower(), row[2].lower(), row[3].lower()]).replace('triangle1', 'triangle').replace('triangle2', 'triangle').replace('rectangle1', 'rectangle').replace('funkyshape', 'star')
+        alphamap[encoding] = row[0]
 # print(alphamap)
 
 shapeArray = []
-with open('filename.csv') as csv_file:
+with open('coords.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     for row in csv_reader:
         for column in row:
@@ -21,28 +22,24 @@ with open('filename.csv') as csv_file:
           for attr in a:
               shape += attr.strip(" \'").strip("\')") + " "
           shapeArray.append(shape.strip(" ").lower())
-# print(shapeArray)
-n_arr = [None] * (math.ceil(len(shapeArray) / 12))
+# print(shapeArray[30])
+# shapeArray = shapeArray[:30] + shapeArray[31:91]
+# print(len(shapeArray))
+# n_arr = [None] * (math.ceil(len(shapeArray) / 12))
+n_arr = []
 for i in range(12):
-    n_arr[i] = shapeArray[30 * i: 30 * i + 30]
-    if len(n_arr[i]) != 30:
-        n_arr[i] += ["NONE"] * (30-len(n_arr[i]))
-    # print(n_arr[i], len(n_arr[i]))
-# a = list(itertools.zip_longest(n_arr))
-np = numpy.array(n_arr)
-print(np.transpose())
+    n_arr.append(shapeArray[30 * i: 30 * i + 30])
+    print(n_arr[i], len(n_arr[i]))
+    # print(30 * i, 30 * i + 30 - 1)
+# print(n_arr)
+# encodedMessage = list(map(list, zip(*n_arr)))
+# decodedMessage = ['_'] * len(encodedMessage)
+# for i in range(len(encodedMessage)):
+#     message = ', '.join(encodedMessage[i])
+#     # print(message)
+#     if message in alphamap: 
+#         decodedMessage[i] = alphamap.get(message)
+#     else: 
+#         print(message)
 
-# result = [None] * 30
-# for i in range(len(result)):
-#     result[i] = [1] * 12
-# for i in range(len(n_arr)):
-#     for j in range(len(n_arr[0])):
-#         print(j)
-#         result[j][i] = n_arr[i][j]
-# print(map(list,zip(*n_arr)))
-# for i in n_arr: 
-#     print(i, len(i))
-# message = [None] * len(n_arr)
-# for letter in alphamap:
-#     i = n_arr.index(alphamap[letter])
-#     print(i)
+# print(''.join(decodedMessage).replace('bang', '!').replace('qmark', '?').replace('space', ' ').replace('dot', '.'), decodedMessage.count("_"))
