@@ -64,8 +64,8 @@ void drawEncodedMessage() {
   int y = 15;
   int col_width = X_DIM / N_COLS;
   for (int j = 0; j < ENCODED_MESSAGE_LENGTH; j++) {    
-    int randTriangle1 = new Random().nextInt(4); 
-    int randTriangle2 = new Random().nextInt(4);
+    int randTriangle1 = new Random().nextInt(2); 
+    int randTriangle2 = new Random().nextInt(2);
     int randRect = new Random().nextInt(3);
     int inc_height = 30;
     int inc_width = 80;
@@ -109,16 +109,16 @@ void drawEncodedMessage() {
                 drawTriangleD(x + inc_width * x_offset, y, fillColor);
               }
               break;
-            case 2:
-              for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTriangleR(x + inc_width * x_offset, y, fillColor);
-              }
-              break;
-            case 3:
-              for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTriangleL(x + inc_width * x_offset, y, fillColor);
-              }
-              break;
+            //case 2:
+            //  for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
+            //    drawTriangleR(x + inc_width * x_offset, y, fillColor);
+            //  }
+            //  break;
+            //case 3:
+            //  for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
+            //    drawTriangleL(x + inc_width * x_offset, y, fillColor);
+            //  }
+            //  break;
           }
           break;
         case "triangle2":
@@ -133,16 +133,16 @@ void drawEncodedMessage() {
                 drawTriangleD(x + inc_width * x_offset, y, fillColor);
               }
               break;
-            case 2:
-              for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTriangleR(x + inc_width * x_offset, y, fillColor);
-              }
-              break;
-            case 3:
-              for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTriangleL(x + inc_width * x_offset, y, fillColor);
-              }
-              break;
+            //case 2:
+            //  for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
+            //    drawTriangleR(x + inc_width * x_offset, y, fillColor);
+            //  }
+            //  break;
+            //case 3:
+            //  for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
+            //    drawTriangleL(x + inc_width * x_offset, y, fillColor);
+            //  }
+            //  break;
           }
           break;
         case "rectangle":
@@ -271,21 +271,21 @@ void drawSquare(int x1, int y1, color fillColor) {
   rect(x1, y1, w, h);
 }
 
-void drawTriangleR(int x1, int y1, color fillColor) {
-  int h = 20;
-  float b = (h / 2) * sqrt(3); 
-  fill(fillColor);
-  x1 += 2;
-  triangle(x1, y1, x1, y1 + h, x1 + b, y1 + h / 2);
-}
+//void drawTriangleR(int x1, int y1, color fillColor) {
+//  int h = 20;
+//  float b = (h / 2) * sqrt(3); 
+//  fill(fillColor);
+//  x1 += 2;
+//  triangle(x1, y1, x1, y1 + h, x1 + b, y1 + h / 2);
+//}
 
-void drawTriangleL(int x1, int y1, color fillColor) {
-  int h = 20;
-  float b = (h / 2) * sqrt(3);
-  x1 += 2;
-  fill(fillColor);
-  triangle(x1 + b, y1, x1 + b, y1 + h, x1, y1 + h / 2);
-}
+//void drawTriangleL(int x1, int y1, color fillColor) {
+//  int h = 20;
+//  float b = (h / 2) * sqrt(3);
+//  x1 += 2;
+//  fill(fillColor);
+//  triangle(x1 + b, y1, x1 + b, y1 + h, x1, y1 + h / 2);
+//}
 
 void drawTriangleD(int x1, int y1, color fillColor) {
   int b = 20;
@@ -368,24 +368,24 @@ void drawTestShapes() {
   drawLongRect(80, 65, BLUE);
   drawLongRect(100, 65, PURPLE);
   drawLongRect(125, 65, MAROON);
-  drawTriangleR(0, 80, MAROON); 
-  drawTriangleR(25, 80, PINK);
-  drawTriangleR(50, 80, GREEN);
-  drawTriangleR(80, 80, BLUE);
-  drawTriangleR(100, 80, PURPLE);
-  drawTriangleR(125, 80, MAROON);
+  //drawTriangleR(0, 80, MAROON); 
+  //drawTriangleR(25, 80, PINK);
+  //drawTriangleR(50, 80, GREEN);
+  //drawTriangleR(80, 80, BLUE);
+  //drawTriangleR(100, 80, PURPLE);
+  //drawTriangleR(125, 80, MAROON);
   drawSquare(0, 140, MAROON); 
   drawSquare(25, 140, PINK);
   drawSquare(50, 140, GREEN);
   drawSquare(80, 140, BLUE);
   drawSquare(100, 140, PURPLE);
   drawSquare(125, 140, MAROON);
-  drawTriangleL(0, 220, MAROON); 
-  drawTriangleL(25, 220, PINK);
-  drawTriangleL(50, 220, GREEN);
-  drawTriangleL(80, 220, BLUE);
-  drawTriangleL(100, 220, PURPLE);
-  drawTriangleL(125, 220, MAROON);
+  //drawTriangleL(0, 220, MAROON); 
+  //drawTriangleL(25, 220, PINK);
+  //drawTriangleL(50, 220, GREEN);
+  //drawTriangleL(80, 220, BLUE);
+  //drawTriangleL(100, 220, PURPLE);
+  //drawTriangleL(125, 220, MAROON);
   drawTriangleD(0, 225, MAROON); 
   drawTriangleD(25, 225, PINK);
   drawTriangleD(50, 225, GREEN);
