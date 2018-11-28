@@ -1,6 +1,7 @@
 from picamera import PiCamera
 from time import sleep
 import RPi.GPIO as GPIO
+import cv2
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_UP)
