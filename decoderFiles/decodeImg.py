@@ -13,29 +13,41 @@ with open('alphamap.csv') as csv_file:
 # print(alphamap)
 
 shapeArray = []
+i = 1
 with open('coords_first3.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     for row in csv_reader:
         for column in row:
-            print(column)
+            # for i in range(len(column)):
+            #     column[i] = column[i].strip(', ')
+            if(i<=3): 
+                a = column.lower().replace(" ',", "").replace("'", "").replace("[", "").replace("]", "").split(",")
+                # print(a[:len(a)-1], len(a)-1)
+                shapeArray.append(a[:len(a)-1])
+                i += 1
         #   a = column.replace('[\'', '').replace('\']', '').replace('\'', '').split(',')
         #   shape = a
         #   for attr in a:
             #   print(a)
             #   shape += attr.strip(" \'").strip("\')") + " "
         #   shapeArray.append(shape.strip(" ").lower())
-# print(shapeArray[:30])
+# print(shapeArray)
 # shapeArray = shapeArray[:30] + shapeArray[31:91]
 # print(len(shapeArray))
 # n_arr = [None] * (math.ceil(len(shapeArray) / 12))
-n_arr = []
-for i in range(3):
-    n_arr.append(shapeArray[30 * i: 30 * i + 30])
+# n_arr = []
+# for i in range(3):
+    # n_arr.append(shapeArray[30 * i: 30 * i + 30])
     # print(n_arr[i], len(n_arr[i]))
     # print(30 * i, 30 * i + 30 - 1)
 # print(n_arr)
-encodedMessage = list(map(list, zip(*n_arr)))
-decodedMessage = ['_'] * len(encodedMessage)
+encodedMessage = list(map(list, zip(*shapeArray)))
+for i in range(len(encodedMessage)):
+    for j in range(len(encodedMessage[i])):
+        encodedMessage[i][j] = encodedMessage[i][j].strip()
+# encodedMessage = encodedMessage[:len(encodedMessage) - 1]
+print(encodedMessage)
+decodedMessage = ['_'] * len(encodedMessage) 
 for i in range(len(encodedMessage)):
     message = ', '.join(encodedMessage[i])
     # print(message)
