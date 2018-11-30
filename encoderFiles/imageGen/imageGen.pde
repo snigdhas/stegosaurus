@@ -1,7 +1,7 @@
 import processing.net.*;
 import java.util.Random;
+import java.io.*;
 
-HashMap<String, String[]> ALPHA_MAP = new HashMap<String, String[]>();
 color MAROON;
 color PINK;
 color GREEN;
@@ -11,31 +11,26 @@ String[][] ENCODED_MESSAGE;
 int ENCODED_MESSAGE_LENGTH;
     
 int N_COLS = 8;
-int N_ROWS = 32;
+int N_ROWS = 34;
 int X_DIM = 600;
-int Y_DIM = 990;
+int Y_DIM = 1050;
 
 String inputString = "";
 String filepath = "/home/pi/stegosaurus/encoderFiles/imageGen/encodedmessage.jpg";
 
 void setup() {
-  size(2800, 4144);
+  size(2800, 4374);
   scale(4.166);
   background(255, 255, 255);
   stroke(0);
-  line(2, 2, 660, 2);
-  line(2, 8, 660, 8);
   noStroke();
   noLoop();
-  mapSetup();
   MAROON = color(150, 0, 0);
   PINK = color(244, 66, 140);
   GREEN = color(37, 163, 64);
   BLUE = color(47, 50, 226);
   PURPLE = color(137, 0, 150);
   ENCODED_MESSAGE = processInput();
-  //int canvasSize = (ENCODED_MESSAGE_LENGTH) * 30; 
-  //surface.setSize(300, canvasSize); // comment out to stop canvas resize
   drawEncodedMessage();
   printEncodedMessage();
 }
@@ -48,13 +43,33 @@ String[][] processInput() {
   } else {
     inputString = "abcdefghijklmnopqrstuvwxyz .!?zz";
   }
-  ENCODED_MESSAGE_LENGTH = inputString.length();
+
+  ArrayList<String> s = new ArrayList<String>();;
+  String t = null;
+  try {
+    String path = "\"C:\\Users\\Snigdha\\Desktop\\Fall 2018\\ECE Capstone\\Stegosaurus\\encoderFiles\\imageGen\\randomizedEncoder.py\"";
+    Process p = Runtime.getRuntime().exec("python " + path + " -r -e \"" + inputString + "\"");
+    BufferedReader stdOut = new BufferedReader(new InputStreamReader(p.getInputStream()));
+    //BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+    while ((t = stdOut.readLine()) != null) {
+       s.add(t);
+    }
+    // read any errors from the attempted command
+    //System.out.println("Here is the standard error of the command (if any):\n");
+    //while ((s = stdError.readLine()) != null) {
+    //  System.out.println(s);
+    //}
+  } catch (Exception err) {
+    err.printStackTrace();
+  }
+
+  String[] encodedMessageString = s.get(0).replace("\"", "").split("], ");
+  ENCODED_MESSAGE_LENGTH = encodedMessageString.length;
   String[][] encodedMessage = new String[ENCODED_MESSAGE_LENGTH][];
-  int i = 0;
-  for (String c: inputString.toLowerCase().split("")) {
-    encodedMessage[i] = (String[])ALPHA_MAP.get(c);
-    i++;
-  }  
+  for (int i = 0; i < ENCODED_MESSAGE_LENGTH; i++) {
+    encodedMessage[i] = encodedMessageString[i].replace("[", "").replace("]", "").split(",");
+  }
+  
   return encodedMessage;
 }
 
@@ -64,29 +79,34 @@ void drawEncodedMessage() {
   int y = 15;
   int col_width = X_DIM / N_COLS;
   for (int j = 0; j < ENCODED_MESSAGE_LENGTH; j++) {    
-    int randTriangle1 = new Random().nextInt(2); 
-    int randTriangle2 = new Random().nextInt(2);
+    int randTriangle = new Random().nextInt(2);
     int randRect = new Random().nextInt(3);
     int inc_height = 30;
     int inc_width = 80;
     String[] code = ENCODED_MESSAGE[j];
+    //print("CODE: ");
+    //println(code);
     x = offset;
     for (int k = 0; k < code.length; k++) {
-      String i = code[k];
+      String i = code[k].trim();
+      //println(i);
       String[] instr = i.split(" ");
       String shape = instr[0];
       String fc = instr[1];
+      //print("INSTR: ");
+      //print(instr);
+      //println(instr.length, " SHAPE: ", shape, " COLOR: ", fc);
       color fillColor;
       switch (fc) {
-        case "MAROON": fillColor = MAROON;
+        case "maroon": fillColor = MAROON;
           break;
-        case "PINK": fillColor = PINK;
+        case "pink": fillColor = PINK;
           break;
-        case "PURPLE": fillColor = PURPLE;
+        case "purple": fillColor = PURPLE;
           break;
-        case "BLUE": fillColor = BLUE;
+        case "blue": fillColor = BLUE;
           break;
-        case "GREEN": fillColor = GREEN;
+        case "green": fillColor = GREEN;
           break;
         default: fillColor = PINK;
           break;        
@@ -97,8 +117,8 @@ void drawEncodedMessage() {
             drawCircle(x + inc_width * x_offset, y, fillColor);
           }
           break;
-        case "triangle1":
-          switch (randTriangle1) {
+        case "triangle":
+          switch (randTriangle) {
             case 0:
               for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
                 drawTriangleU(x + inc_width * x_offset, y, fillColor);
@@ -121,30 +141,30 @@ void drawEncodedMessage() {
             //  break;
           }
           break;
-        case "triangle2":
-          switch (randTriangle2) {
-            case 0:
-              for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTriangleU(x + inc_width * x_offset, y, fillColor);
-              }
-              break;
-            case 1:
-              for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-                drawTriangleD(x + inc_width * x_offset, y, fillColor);
-              }
-              break;
-            //case 2:
-            //  for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-            //    drawTriangleR(x + inc_width * x_offset, y, fillColor);
-            //  }
-            //  break;
-            //case 3:
-            //  for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-            //    drawTriangleL(x + inc_width * x_offset, y, fillColor);
-            //  }
-            //  break;
-          }
-          break;
+        //case "triangle2":
+        //  switch (randTriangle2) {
+        //    case 0:
+        //      for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
+        //        drawTriangleU(x + inc_width * x_offset, y, fillColor);
+        //      }
+        //      break;
+        //    case 1:
+        //      for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
+        //        drawTriangleD(x + inc_width * x_offset, y, fillColor);
+        //      }
+        //      break;
+        //    //case 2:
+        //    //  for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
+        //    //    drawTriangleR(x + inc_width * x_offset, y, fillColor);
+        //    //  }
+        //    //  break;
+        //    //case 3:
+        //    //  for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
+        //    //    drawTriangleL(x + inc_width * x_offset, y, fillColor);
+        //    //  }
+        //    //  break;
+        //  }
+        //  break;
         case "rectangle":
           switch (randRect) {
             case 0:
@@ -182,72 +202,6 @@ void drawEncodedMessage() {
     y += inc_height;
     x += (4.166 * X_DIM) / N_ROWS / 2;
   } 
-}
-
-HashMap<String, String[]> mapSetup() {
-  String[] a_string = {"circle PURPLE", "circle GREEN", "circle PURPLE"};
-  String[] b_string = {"rectangle MAROON", "rectangle MAROON", "pentagon PURPLE"};
-  String[] c_string = {"triangle1 BLUE", "triangle2 PINK", "triangle1 BLUE"};
-  String[] d_string = {"triangle1 PINK", "triangle2 BLUE", "triangle1 PINK"};
-  String[] e_string = {"star PURPLE", "circle GREEN", "star PURPLE"};
-  String[] f_string = {"rectangle MAROON", "rectangle PINK", "rectangle MAROON"};
-  String[] g_string = {"circle BLUE", "rectangle PINK", "rectangle PINK"};
-  String[] h_string = {"star PURPLE", "star PINK", "star GREEN"};
-  String[] i_string = {"pentagon MAROON", "rectangle PINK", "pentagon MAROON"};
-  String[] j_string = {"triangle1 PURPLE", "triangle2 GREEN", "triangle1 PURPLE"};
-  String[] k_string = {"pentagon BLUE", "star GREEN", "pentagon BLUE"};
-  String[] l_string = {"pentagon PURPLE", "triangle1 PURPLE", "pentagon PURPLE"};
-  String[] m_string = {"star GREEN", "pentagon PURPLE", "star GREEN"};
-  String[] n_string = {"rectangle MAROON", "pentagon BLUE", "rectangle MAROON"};
-  String[] o_string = {"circle BLUE", "star MAROON", "circle BLUE"};
-  String[] p_string = {"pentagon GREEN", "circle PURPLE", "pentagon GREEN"};
-  String[] q_string = {"pentagon PURPLE", "pentagon BLUE", "pentagon GREEN"};
-  String[] r_string = {"star BLUE", "star PURPLE", "star BLUE"};
-  String[] s_string = {"rectangle GREEN", "rectangle MAROON", "rectangle GREEN"};
-  String[] t_string = {"rectangle BLUE", "triangle1 PINK", "triangle1 PINK"};
-  String[] u_string = {"star MAROON", "rectangle BLUE", "rectangle BLUE"};
-  String[] v_string = {"triangle1 PINK", "triangle1 PINK", "rectangle BLUE"};
-  String[] w_string = {"rectangle GREEN", "rectangle MAROON", "rectangle MAROON"};
-  String[] x_string = {"triangle1 MAROON", "triangle2 MAROON", "triangle1 MAROON"};
-  String[] y_string = {"circle PINK", "rectangle MAROON", "circle PINK"};
-  String[] z_string = {"circle MAROON", "circle MAROON", "circle MAROON"};
-  String[] space_string = {"circle BLUE", "circle GREEN", "circle PINK"};
-  String[] dot_string = {"circle PURPLE", "triangle1 BLUE", "circle PURPLE"};
-  String[] bang_string = {"triangle1 BLUE", "circle GREEN", "circle PURPLE"};
-  String[] qmark_string = {"circle PURPLE", "triangle1 MAROON", "circle PURPLE"};
-
-  ALPHA_MAP.put("a", a_string);
-  ALPHA_MAP.put("b", b_string);
-  ALPHA_MAP.put("c", c_string);
-  ALPHA_MAP.put("d", d_string);
-  ALPHA_MAP.put("e", e_string);
-  ALPHA_MAP.put("f", f_string);
-  ALPHA_MAP.put("g", g_string);
-  ALPHA_MAP.put("h", h_string);
-  ALPHA_MAP.put("i", i_string);
-  ALPHA_MAP.put("j", j_string);
-  ALPHA_MAP.put("k", k_string);
-  ALPHA_MAP.put("l", l_string);
-  ALPHA_MAP.put("m", m_string);
-  ALPHA_MAP.put("n", n_string);
-  ALPHA_MAP.put("o", o_string);
-  ALPHA_MAP.put("p", p_string);
-  ALPHA_MAP.put("q", q_string);
-  ALPHA_MAP.put("r", r_string);
-  ALPHA_MAP.put("s", s_string);
-  ALPHA_MAP.put("t", t_string);
-  ALPHA_MAP.put("u", u_string);
-  ALPHA_MAP.put("v", v_string);
-  ALPHA_MAP.put("w", w_string);
-  ALPHA_MAP.put("x", x_string);
-  ALPHA_MAP.put("y", y_string);
-  ALPHA_MAP.put("z", z_string);
-  ALPHA_MAP.put(" ", space_string);
-  ALPHA_MAP.put(".", dot_string);
-  ALPHA_MAP.put("!", bang_string);
-  ALPHA_MAP.put("?", qmark_string);
-
-  return ALPHA_MAP;
 }
 
 void drawTallRect(int x1, int y1, color fillColor) {
