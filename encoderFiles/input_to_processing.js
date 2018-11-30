@@ -10,6 +10,9 @@ lcd.clear();
 var text = "";
 var buffer = "x".repeat(24);
 
+const OSC = require('osc-js');
+const osc = new OSC({ plugin: new OSC.DatagramPlugin()})
+osc.open()
 
 readline.emitKeypressEvents(process.stdin);
 
@@ -57,14 +60,18 @@ button.watch((err, val) => {
 function processText() {
 	// writes out to shell
 	
-	exec('processing-java --sketch="/home/pi/stegosaurus/encoderFiles/imageGen" --run ' + text, (err, stdout, stderr) => {
-		        console.log(`stdout: ${stdout}`);
-		        console.log(`stderr: ${stderr}`);
-		        if (err !== null) {
-				            console.log(`exec error: ${err}`);
-				        }
-	});
-	console.log("printed");
+	// exec('processing-java --sketch="/home/pi/stegosaurus/encoderFiles/imageGen" --run ' + text, (err, stdout, stderr) => {
+	// 	        console.log(`stdout: ${stdout}`);
+	// 	        console.log(`stderr: ${stderr}`);
+	// 	        if (err !== null) {
+	// 			            console.log(`exec error: ${err}`);
+	//			        }
+	// });
+	// console.log("printed");
+	console.log("hi");	
+	osc.send(new OSC.Message('/test'), {port: 8080});
+	console.log("message sent");
+
 	text = "";
 	lcd.clear();
 }
