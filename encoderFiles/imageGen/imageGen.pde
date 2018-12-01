@@ -41,14 +41,14 @@ String[][] processInput() {
       inputString += args[i] + " ";
     }
   } else {
-    inputString = "abcdefghijklmnopqrstuvwxyz .!?zz";
+    inputString = "z .!?";
   }
 
   ArrayList<String> s = new ArrayList<String>();;
   String t = null;
   try {
-    String path = "\"C:\\Users\\Snigdha\\Desktop\\Fall 2018\\ECE Capstone\\Stegosaurus\\encoderFiles\\imageGen\\randomizedEncoder.py\"";
-    Process p = Runtime.getRuntime().exec("python " + path + " -r -e \"" + inputString + "\"");
+    String path = "/home/pi/stegosaurus/encoderFiles/imageGen/randomizedEncoder.py";
+    Process p = Runtime.getRuntime().exec(new String[] {"python3", path, "-r", "-e", inputString});
     BufferedReader stdOut = new BufferedReader(new InputStreamReader(p.getInputStream()));
     //BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
     while ((t = stdOut.readLine()) != null) {
@@ -56,8 +56,8 @@ String[][] processInput() {
     }
     // read any errors from the attempted command
     //System.out.println("Here is the standard error of the command (if any):\n");
-    //while ((s = stdError.readLine()) != null) {
-    //  System.out.println(s);
+    //while ((t = stdError.readLine()) != null) {
+    //  System.out.println(t);
     //}
   } catch (Exception err) {
     err.printStackTrace();
