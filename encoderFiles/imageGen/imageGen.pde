@@ -19,7 +19,7 @@ String inputString = "";
 String filepath = "/home/pi/stegosaurus/encoderFiles/imageGen/encodedmessage.jpg";
 
 void setup() {
-  size(2800, 4374);
+  size(2800, 4450);
   scale(4.166);
   background(255, 255, 255);
   stroke(0);
@@ -41,24 +41,26 @@ String[][] processInput() {
       inputString += args[i] + " ";
     }
   } else {
-    inputString = "z .!?";
+    //inputString = "ab";
+    inputString = "abcdefghijklmnopqrstuvwxyz .!?zz";
   }
 
-  ArrayList<String> s = new ArrayList<String>();;
+  ArrayList<String> s = new ArrayList<String>();
   String t = null;
   try {
     String path = "/home/pi/stegosaurus/encoderFiles/imageGen/randomizedEncoder.py";
-    Process p = Runtime.getRuntime().exec(new String[] {"python3", path, "-r", "-e", inputString});
+    Process p = Runtime.getRuntime().exec(new String[] {"python3", path, "-e", inputString});
     BufferedReader stdOut = new BufferedReader(new InputStreamReader(p.getInputStream()));
-    //BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+    BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
     while ((t = stdOut.readLine()) != null) {
        s.add(t);
+       println(t);
     }
     // read any errors from the attempted command
-    //System.out.println("Here is the standard error of the command (if any):\n");
-    //while ((t = stdError.readLine()) != null) {
-    //  System.out.println(t);
-    //}
+    System.out.println("Here is the standard error of the command (if any):\n");
+    while ((t = stdError.readLine()) != null) {
+      System.out.println(t);
+    }
   } catch (Exception err) {
     err.printStackTrace();
   }
@@ -84,18 +86,12 @@ void drawEncodedMessage() {
     int inc_height = 30;
     int inc_width = 80;
     String[] code = ENCODED_MESSAGE[j];
-    //print("CODE: ");
-    //println(code);
     x = offset;
     for (int k = 0; k < code.length; k++) {
       String i = code[k].trim();
-      //println(i);
       String[] instr = i.split(" ");
       String shape = instr[0];
       String fc = instr[1];
-      //print("INSTR: ");
-      //print(instr);
-      //println(instr.length, " SHAPE: ", shape, " COLOR: ", fc);
       color fillColor;
       switch (fc) {
         case "maroon": fillColor = MAROON;
@@ -129,42 +125,8 @@ void drawEncodedMessage() {
                 drawTriangleD(x + inc_width * x_offset, y, fillColor);
               }
               break;
-            //case 2:
-            //  for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-            //    drawTriangleR(x + inc_width * x_offset, y, fillColor);
-            //  }
-            //  break;
-            //case 3:
-            //  for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-            //    drawTriangleL(x + inc_width * x_offset, y, fillColor);
-            //  }
-            //  break;
           }
           break;
-        //case "triangle2":
-        //  switch (randTriangle2) {
-        //    case 0:
-        //      for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-        //        drawTriangleU(x + inc_width * x_offset, y, fillColor);
-        //      }
-        //      break;
-        //    case 1:
-        //      for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-        //        drawTriangleD(x + inc_width * x_offset, y, fillColor);
-        //      }
-        //      break;
-        //    //case 2:
-        //    //  for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-        //    //    drawTriangleR(x + inc_width * x_offset, y, fillColor);
-        //    //  }
-        //    //  break;
-        //    //case 3:
-        //    //  for (int x_offset = 0; x_offset < N_COLS; x_offset++) {
-        //    //    drawTriangleL(x + inc_width * x_offset, y, fillColor);
-        //    //  }
-        //    //  break;
-        //  }
-        //  break;
         case "rectangle":
           switch (randRect) {
             case 0:
@@ -224,22 +186,6 @@ void drawSquare(int x1, int y1, color fillColor) {
   fill(fillColor);
   rect(x1, y1, w, h);
 }
-
-//void drawTriangleR(int x1, int y1, color fillColor) {
-//  int h = 20;
-//  float b = (h / 2) * sqrt(3); 
-//  fill(fillColor);
-//  x1 += 2;
-//  triangle(x1, y1, x1, y1 + h, x1 + b, y1 + h / 2);
-//}
-
-//void drawTriangleL(int x1, int y1, color fillColor) {
-//  int h = 20;
-//  float b = (h / 2) * sqrt(3);
-//  x1 += 2;
-//  fill(fillColor);
-//  triangle(x1 + b, y1, x1 + b, y1 + h, x1, y1 + h / 2);
-//}
 
 void drawTriangleD(int x1, int y1, color fillColor) {
   int b = 20;
@@ -307,73 +253,4 @@ void printEncodedMessage() {
       exit();
     }
   }
-}
-
-void drawTestShapes() {  
-  drawTallRect(0, 0, MAROON);
-  drawTallRect(25, 0, PINK);
-  drawTallRect(50, 0, GREEN);
-  drawTallRect(80, 0, BLUE);
-  drawTallRect(100, 0, PURPLE);
-  drawTallRect(125, 0, MAROON);
-  drawLongRect(0, 65, MAROON);
-  drawLongRect(25, 65, PINK);
-  drawLongRect(50, 65, GREEN);
-  drawLongRect(80, 65, BLUE);
-  drawLongRect(100, 65, PURPLE);
-  drawLongRect(125, 65, MAROON);
-  //drawTriangleR(0, 80, MAROON); 
-  //drawTriangleR(25, 80, PINK);
-  //drawTriangleR(50, 80, GREEN);
-  //drawTriangleR(80, 80, BLUE);
-  //drawTriangleR(100, 80, PURPLE);
-  //drawTriangleR(125, 80, MAROON);
-  drawSquare(0, 140, MAROON); 
-  drawSquare(25, 140, PINK);
-  drawSquare(50, 140, GREEN);
-  drawSquare(80, 140, BLUE);
-  drawSquare(100, 140, PURPLE);
-  drawSquare(125, 140, MAROON);
-  //drawTriangleL(0, 220, MAROON); 
-  //drawTriangleL(25, 220, PINK);
-  //drawTriangleL(50, 220, GREEN);
-  //drawTriangleL(80, 220, BLUE);
-  //drawTriangleL(100, 220, PURPLE);
-  //drawTriangleL(125, 220, MAROON);
-  drawTriangleD(0, 225, MAROON); 
-  drawTriangleD(25, 225, PINK);
-  drawTriangleD(50, 225, GREEN);
-  drawTriangleD(80, 225, BLUE);
-  drawTriangleD(100, 225, PURPLE);
-  drawTriangleD(125, 225, MAROON);
-  drawSquare(0, 255, MAROON); 
-  drawSquare(25, 255, PINK);
-  drawSquare(50, 255, GREEN);
-  drawSquare(80, 255, BLUE);
-  drawSquare(100, 255, PURPLE);
-  drawSquare(125, 255, MAROON);
-  drawTriangleU(0, 305, MAROON); 
-  drawTriangleU(25, 305, PINK);
-  drawTriangleU(50, 305, GREEN);
-  drawTriangleU(80, 305, BLUE);
-  drawTriangleU(100, 305, PURPLE);
-  drawTriangleU(125, 305, MAROON);
-  drawCircle(10, 320, MAROON);
-  drawCircle(35, 320, PINK);
-  drawCircle(60, 320, GREEN);
-  drawCircle(85, 320, BLUE);
-  drawCircle(110, 320, PURPLE);
-  drawCircle(135, 320, MAROON);
-  drawStar(0, 330, MAROON);
-  drawStar(25, 330, PINK);
-  drawStar(50, 330, GREEN);
-  drawStar(80, 330, BLUE);
-  drawStar(100, 330, PURPLE);
-  drawStar(125, 330, MAROON);
-  drawPentagon(0, 365, MAROON);
-  drawPentagon(25, 365, PINK);
-  drawPentagon(50, 365, GREEN);
-  drawPentagon(80, 365, BLUE);
-  drawPentagon(100, 365, PURPLE);
-  drawPentagon(125, 365, MAROON);
 }

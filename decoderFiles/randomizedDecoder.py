@@ -22,12 +22,10 @@ def gen_character_mapping(key):
     character_patterns = random.sample(patterns, len(characters))
     return dict(zip(characters, character_patterns))
 
-
 def encode(user_input):
     key = random.choice(patterns)
     mapping = gen_character_mapping(key)
 
-    
     key_list = [[' '.join(x) for x in key]]
     terminator_list = [[' '.join(x) for x in mapping[TERMINATOR]]]
     mapping_list = [[' '.join(x) for x in mapping[char]] for char in user_input]
@@ -36,8 +34,11 @@ def encode(user_input):
     print(json.dumps(input_to_patterns))
     
 def decode(encoded_text):
-    encoded_characters = [tuple(map(tuple, pattern)) for pattern in json.loads(encoded_text)]
-
+    encoded_characters = []
+    for pattern in json.loads(encoded_text):
+        a = [tuple(x.split()) for x in pattern]
+        encoded_characters.append((tuple(a)))
+        
     key = encoded_characters[0]
     mapping = gen_character_mapping(key)
     if mapping[TERMINATOR] != encoded_characters[-1]:
@@ -50,14 +51,15 @@ def decode(encoded_text):
 
     print(''.join(mapping[char] for char in encoded_characters[1:-1]))
 
+
 def main():
     parser = argparse.ArgumentParser()
     action_group = parser.add_mutually_exclusive_group(required=True)
-    action_group.add_argument('-e', '--encode')
+    action_group.add_argument('-d', '--decode')
     args = parser.parse_args()
     
-    if args.encode:
-        encode(args.encode)
+    if args.decode:
+        decode(args.decode)
     else:
         raise ValueError
 
