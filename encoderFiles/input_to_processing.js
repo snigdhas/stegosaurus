@@ -4,6 +4,7 @@ var lcd = new LCD(1, 0x27);
 var readline = require('readline');
 var GPIO = require('onoff').Gpio;
 var button = new GPIO(4, 'in', 'both');
+var LED = new GPIO(17, 'out');
 var pushed = false;
 var line = 1;
 lcd.clear();
@@ -14,6 +15,8 @@ var inputEnabled = true;
 const OSC = require('osc-js');
 const osc = new OSC({ plugin: new OSC.DatagramPlugin()})
 osc.open()
+
+LED.writeSync(0)
 
 readline.emitKeypressEvents(process.stdin);
 
@@ -74,8 +77,7 @@ function processText() {
 	// });
 	// console.log("printed");
 	disableInput();
-	setTimeout(enableInput, 2000);
-
+	setTimeout(enableInput, 20000);
 	console.log(text);	
 	osc.send(new OSC.Message(text), {port: 8080});
 	console.log("message sent");
@@ -83,17 +85,33 @@ function processText() {
 	text = "";
 }
 
+var periodInterval;
+
 function enableInput() {
+	LED.writeSync(0);
+	clearInterval(periodInterval);
 	console.log("input enabled");
 	inputEnabled = true;
 	lcd.clear();
 }
 
 function disableInput() {
+	LED.writeSync(1);
 	console.log("input disabled");
 	inputEnabled = false;
 	lcd.clear();
-	lcd.print("printing...");
+	periods = 0;
+	lcd.print("printing");
+	periodInterval = setInterval(() => {
+		if (periods === 3) {
+			lcd.clear();
+			lcd.print("printing");
+			periods = 0;
+		} else {
+			lcd.print(".");
+			periods += 1;
+		}
+	}, 800)
 }
 
 process.stdin.on('keypress', (str, key) => {
