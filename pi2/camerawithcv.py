@@ -1,6 +1,6 @@
 from shapelabeler import ShapeDetector
 from colorlabeler import ColorLabeler
-from decoder import Decoder
+#from randomizdDecoder import decode
 import argparse
 # import imutils
 import csv
@@ -73,8 +73,7 @@ while True:
             image = stream.array
             cv2.imwrite("zoom.jpg", image)
             shapes = alltheCV(image)
-            d = Decoder(shapes)
-            textoutput = d.getText()
+            textoutput = decode(shapes)
             lcd = CharLCD('PCF8574', 0x27)
             lcd.write_string(textoutput)
             time.sleep(2)

@@ -1,5 +1,6 @@
 String message = "";
-String filepath = "/home/pi/sketchbook/print_image/encodedmessage.jpg";
+String filepath = "/home/pi/sketchbook/print_image/encodedmessage2.jpg";
+//String filepath = "/home/pi/stegosaurus/encoderFiles/imageGen/encodedmessage.jpg";
 
 void setup() {
   size(400, 400);
