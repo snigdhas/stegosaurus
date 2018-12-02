@@ -28,7 +28,7 @@ OscP5 oscP5;
 
 void setup() {
   oscP5 = new OscP5(this, 8080);
-  size(2800, 4450);
+  size(2966, 4450);
   scale(4.166);
   background(255, 255, 255);
   stroke(0);
@@ -115,9 +115,9 @@ String[][] processInput(String message) {
 
 void drawEncodedMessage() {
   println("drawing encoded message");
-  int offset = 10;
+  int offset = 60;
   int x = offset;
-  int y = 15;
+  int y = 25;
   int col_width = X_DIM / N_COLS;
   for (int j = 0; j < ENCODED_MESSAGE_LENGTH; j++) {    
     int randTriangle = new Random().nextInt(2);
