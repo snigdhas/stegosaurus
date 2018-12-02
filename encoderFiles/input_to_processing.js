@@ -30,7 +30,9 @@ process.stdin.on('keypress', (str, key) => {
 	} else if (key.name === "return") {
 		processText()
 	}
-	else {	
+	else {
+		str = str.toLowerCase();
+		if (!(/^[a-z]/.test(str) || str==="!" || str===" " || str==="." || str==="?")) return;
 		text += str;
 		if (text.length > 32) text = text.substring(0, 32);
 		if (text.length === 17) lcd.print(buffer);
@@ -41,6 +43,7 @@ process.stdin.on('keypress', (str, key) => {
 	}
 	
 })
+
 
 function displayText(s) {
 	const lineLength = 16;
@@ -79,7 +82,7 @@ function processText() {
 	disableInput();
 	setTimeout(enableInput, 20000);
 	console.log(text);	
-	osc.send(new OSC.Message(text), {port: 8080});
+	osc.send(new OSC.Message("/msg", text), {port: 8080});
 	console.log("message sent");
 
 	text = "";

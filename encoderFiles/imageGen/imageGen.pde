@@ -53,7 +53,7 @@ void draw() {
 
 void oscEvent(OscMessage oscMsg) {
   messageDrawn = false;
-  String msg = oscMsg.addrPattern().substring(1);
+  String msg = oscMsg.get(0).stringValue();
   println("received: "+ msg);
   readyToDraw = false;
   ENCODED_MESSAGE = processInput(msg);
