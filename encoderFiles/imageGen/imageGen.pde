@@ -64,19 +64,19 @@ void printEncodedMessage() {
   filename = "encoded-" + minute() + second() + ".jpg";
   print("saving file: " + filename);
   save(filename);
-  //while (true) {
-  //  File f = dataFile(filepath + filename);
-  //  if (f.exists()) {
-  //    try {
-  //      println("lp " + filepath + filename);
-  //      Runtime.getRuntime().exec("lp " + filepath + filename);
-  //      break;
-  //    } catch (IOException e) {
-  //      println(e);
-  //    }
-  //    exit();
-  //  }
-  //}
+  while (true) {
+    File f = dataFile(filepath + filename);
+    if (f.exists()) {
+      try {
+        println("lp " + filepath + filename);
+        Runtime.getRuntime().exec("lp " + filepath + filename);
+        break;
+      } catch (IOException e) {
+        println(e);
+      }
+      exit();
+    }
+  }
 }
 
 String[][] processInput(String message) {
