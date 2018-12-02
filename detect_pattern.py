@@ -77,22 +77,22 @@ for c in centersSorted:
 	curr = cY
 
 	cX, cY, length, shape, color = c
-	cv2.circle(image, (cX, cY), 3, (255, 255, 255), -1)
-	cv2.imshow('image',image)
-	print(cX, cY, shape, length, color)
+	#cv2.circle(image, (int(cX), int(cY)), 3, (255, 255, 255), -1)
+	#cv2.imshow('image',image)
+	#print(cX, cY, shape, length, color)
 	# print(cX, cY)
-	cv2.waitKey(0)
+	#cv2.waitKey(0)
 	col.append(shape+' '+color)
 
 output.append(col)
 
-print(output)
+#print(output)
 	
 #Debugging
 
 # cv2.waitKey(0)
 
 #Write to csv file
-# with open('coords.csv', 'wb') as myfile:
-#     wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-#     wr.writerow(output)
+with open('coords.csv', 'wb') as myfile:
+    wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+    wr.writerow(output)
