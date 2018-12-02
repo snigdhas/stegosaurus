@@ -9,6 +9,7 @@ var line = 1;
 lcd.clear();
 var text = "";
 var buffer = "x".repeat(24);
+var inputEnabled = true;
 
 const OSC = require('osc-js');
 const osc = new OSC({ plugin: new OSC.DatagramPlugin()})
@@ -19,6 +20,7 @@ readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
 process.stdin.on('keypress', (str, key) => {
+	if (!inputEnabled) return;
 	if (key.name === "backspace") {
 		text = text.substring(0, text.length - 1);
 		displayText(text);
@@ -53,7 +55,9 @@ function displayText(s) {
 
 button.watch((err, val) => {
 	console.log("button pressed");
-	if (!pushed) processText();
+	if (!pushed) {
+		processText();
+	}
 	if (pushed) pushed = false;
 	else pushed = true;
 })
@@ -69,12 +73,27 @@ function processText() {
 	//			        }
 	// });
 	// console.log("printed");
+	disableInput();
+	setTimeout(enableInput, 2000);
+
 	console.log(text);	
 	osc.send(new OSC.Message(text), {port: 8080});
 	console.log("message sent");
 
 	text = "";
+}
+
+function enableInput() {
+	console.log("input enabled");
+	inputEnabled = true;
 	lcd.clear();
+}
+
+function disableInput() {
+	console.log("input disabled");
+	inputEnabled = false;
+	lcd.clear();
+	lcd.print("printing...");
 }
 
 process.stdin.on('keypress', (str, key) => {
