@@ -10,11 +10,15 @@ camera.hflip = True
 
 output = '/home/pi/Desktop/image.jpg';
 
+camera.resolution = (1280, 720);
+
 camera.start_preview()
 camera.preview.alpha = 255
 
 def take_picture():
+    camera.resolution = (1920, 1080);
     camera.capture(output)
+    camera.resolution = (1280, 720);
     camera.stop_preview()
     
 while True:
