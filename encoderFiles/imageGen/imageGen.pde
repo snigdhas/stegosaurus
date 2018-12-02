@@ -22,6 +22,7 @@ String filepath = "/home/pi/stegosaurus/encoderFiles/imageGen/";
 String filename = "";
 
 boolean messageDrawn = false;
+boolean readyToDraw = false;
 
 OscP5 oscP5;
 
@@ -41,20 +42,41 @@ void setup() {
 }
 
 void draw() {
-  scale(4.166);
-  if (!messageDrawn) {
+  if (readyToDraw && !messageDrawn) {
     background(255, 255, 255);
+    scale(4.166);
     drawEncodedMessage();
     messageDrawn = true;
+    printEncodedMessage();
   }
 }
 
 void oscEvent(OscMessage oscMsg) {
+  messageDrawn = false;
   String msg = oscMsg.addrPattern().substring(1);
   println("received: "+ msg);
+  readyToDraw = false;
   ENCODED_MESSAGE = processInput(msg);
-  messageDrawn = false;
-  printEncodedMessage();
+}
+
+
+void printEncodedMessage() {
+  filename = "encoded-" + minute() + second() + ".jpg";
+  print("saving file: " + filename);
+  save(filename);
+  //while (true) {
+  //  File f = dataFile(filepath + filename);
+  //  if (f.exists()) {
+  //    try {
+  //      println("lp " + filepath + filename);
+  //      Runtime.getRuntime().exec("lp " + filepath + filename);
+  //      break;
+  //    } catch (IOException e) {
+  //      println(e);
+  //    }
+  //    exit();
+  //  }
+  //}
 }
 
 String[][] processInput(String message) {
@@ -87,11 +109,12 @@ String[][] processInput(String message) {
   for (int i = 0; i < ENCODED_MESSAGE_LENGTH; i++) {
     encodedMessage[i] = encodedMessageString[i].replace("[", "").replace("]", "").split(",");
   }
-  
+  readyToDraw = true;
   return encodedMessage;
 }
 
 void drawEncodedMessage() {
+  println("drawing encoded message");
   int offset = 10;
   int x = offset;
   int y = 15;
@@ -253,26 +276,4 @@ void drawPentagon(int x1, int y1, color fillColor) {
   }
   endShape(CLOSE);
   popMatrix();
-}
-
-void printEncodedMessage() {
-  filename = "encoded-" + minute() + second() + ".jpg";
-  while (!messageDrawn) {
-  }
-  save(filename);
-  
-  while (true) {
-    File f = dataFile(filepath + filename);
-    if (f.exists()) {
-      println("tryn print");
-      try {
-        println("lp " + filepath + filename);
-        Runtime.getRuntime().exec("lp " + filepath + filename);
-        break;
-      } catch (IOException e) {
-        println(e);
-      }
-      exit();
-    }
-  }
 }
