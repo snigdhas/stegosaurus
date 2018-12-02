@@ -1,6 +1,8 @@
 import processing.net.*;
 import java.util.Random;
 import java.io.*;
+import oscP5.*;
+import netP5.*;
 
 color MAROON;
 color PINK;
@@ -16,34 +18,48 @@ int X_DIM = 600;
 int Y_DIM = 1050;
 
 String inputString = "";
-String filepath = "/home/pi/stegosaurus/encoderFiles/imageGen/encodedmessage.jpg";
+String filepath = "/home/pi/stegosaurus/encoderFiles/imageGen/";
+String filename = "";
+
+boolean messageDrawn = false;
+
+OscP5 oscP5;
 
 void setup() {
+  oscP5 = new OscP5(this, 8080);
   size(2800, 4450);
   scale(4.166);
   background(255, 255, 255);
   stroke(0);
   noStroke();
-  noLoop();
   MAROON = color(150, 0, 0);
   PINK = color(244, 66, 140);
   GREEN = color(37, 163, 64);
   BLUE = color(47, 50, 226);
   PURPLE = color(137, 0, 150);
-  ENCODED_MESSAGE = processInput();
-  drawEncodedMessage();
+  //receiveNewMessage("hello!");
+}
+
+void draw() {
+  scale(4.166);
+  if (!messageDrawn) {
+    background(255, 255, 255);
+    drawEncodedMessage();
+    messageDrawn = true;
+  }
+}
+
+void oscEvent(OscMessage oscMsg) {
+  String msg = oscMsg.addrPattern().substring(1);
+  println("received: "+ msg);
+  ENCODED_MESSAGE = processInput(msg);
+  messageDrawn = false;
   printEncodedMessage();
 }
 
-String[][] processInput() {
-  if (args != null && args.length > 0) {
-    for (int i = 0; i < args.length; i++) {
-      inputString += args[i] + " ";
-    }
-  } else {
-    //inputString = "ab";
-    inputString = "abcdefghijklmnopqrstuvwxyz .!?zz";
-  }
+String[][] processInput(String message) {
+  //inputString = "abcdefghijklmnopqrstuvwxyz .!?zz";
+  inputString = message;
 
   ArrayList<String> s = new ArrayList<String>();
   String t = null;
@@ -240,12 +256,18 @@ void drawPentagon(int x1, int y1, color fillColor) {
 }
 
 void printEncodedMessage() {
-  save("encodedmessage.jpg");
+  filename = "encoded-" + minute() + second() + ".jpg";
+  while (!messageDrawn) {
+  }
+  save(filename);
+  
   while (true) {
-    File f = dataFile(filepath);
+    File f = dataFile(filepath + filename);
     if (f.exists()) {
+      println("tryn print");
       try {
-        Runtime.getRuntime().exec("lp /home/pi/stegosaurus/encoderFiles/imageGen/encodedmessage.jpg");
+        println("lp " + filepath + filename);
+        Runtime.getRuntime().exec("lp " + filepath + filename);
         break;
       } catch (IOException e) {
         println(e);

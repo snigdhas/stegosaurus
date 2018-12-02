@@ -52,6 +52,7 @@ function displayText(s) {
 }
 
 button.watch((err, val) => {
+	console.log("button pressed");
 	if (!pushed) processText();
 	if (pushed) pushed = false;
 	else pushed = true;
@@ -68,8 +69,8 @@ function processText() {
 	//			        }
 	// });
 	// console.log("printed");
-	console.log("hi");	
-	osc.send(new OSC.Message('/test'), {port: 8080});
+	console.log(text);	
+	osc.send(new OSC.Message(text), {port: 8080});
 	console.log("message sent");
 
 	text = "";
