@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from collections import defaultdict
 import argparse
 import hashlib
 import itertools
@@ -8,6 +9,7 @@ import random
 import string
 import sys
 import pprint
+import operator
 
 
 REDUNDANCY = 8
@@ -39,37 +41,25 @@ def column(matrix, i):
 
 def decode(message):
     encodedMessage = []
-    decodedMessage = set()
+    decodedMessage = defaultdict(int)
     for msg in message:
         new_message = []
         for i in range(8):
             new_message.append(tuple(map(lambda x: tuple(x.split(" ")), msg[i * 3 : i * 3 + 3])))
         encodedMessage.append(tuple(new_message))
-    # pprint.pprint(encodedMessage)
     for i in range(8):
         msg = column(encodedMessage, i)
-        # if i == 0: pprint.pprint(msg)
-        decodedMessage.add(decode_message(msg))
-    if len(decodedMessage) == 1:
-        return decodedMessage.pop()
-    else:
-        pass
-
+        decodedMessage[decode_message(msg)] += 1
+    return max(decodedMessage, key=decodedMessage.get)
+    
 def decode_message(encoded_characters):
-    # encoded_characters = []
-    # for pattern in json.loads(encoded_text):
-    #     a = [tuple(x.split()) for x in pattern]
-    #     encoded_characters.append((tuple(a)))
-
-    # pprint.pprint(encoded_characters)
-        
     key = encoded_characters[0]
     mapping = gen_character_mapping(key)
     if mapping[TERMINATOR] != encoded_characters[-1]:
         key = encoded_characters[-1]
         mapping = gen_character_mapping(key)
         if mapping[TERMINATOR] != encoded_characters[0]:
-            raise ValueError('Unable to determine key')
+            return 'Could not decode message' 
         encoded_characters = encoded_characters[::-1]
     mapping = dict(map(reversed, mapping.items()))
 
