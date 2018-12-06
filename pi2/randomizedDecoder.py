@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from collections import defaultdict
+from collections import defaultdict, Counter
 import argparse
 import hashlib
 import itertools
@@ -40,39 +40,52 @@ def column(matrix, i):
     return [row[i] for row in matrix]
 
 def decode(input_message):
-    message_concat = []
+    message_concat = []  
     for i in range(len(input_message)):
         message_concat.append([])
         for j in range(len(input_message[i])):
-            message_concat[i].append(input_message[i][j][2])
+            message_concat[i].append(input_message[i][j][2].lower())
     formatted_message = list(filter(lambda x: len(x) == 24, message_concat))
-
     encodedMessage = []
-    decodedMessage = defaultdict(int)
+    # decodedMessage = defaultdict(int)
     for msg in formatted_message:
         new_message = []
         for i in range(8):
             new_message.append(tuple(map(lambda x: tuple(x.split(" ")), msg[i * 3 : i * 3 + 3])))
         encodedMessage.append(tuple(new_message))
+    decodedMainArray = [[] for i in range(len(encodedMessage) - 2)]
     for i in range(8):
-        msg = column(encodedMessage, i)
-        decodedMessage[decode_message(msg)] += 1
-    return max(decodedMessage, key=decodedMessage.get)
+        msg = decode_message(column(encodedMessage, i))
+        for i in range(len(msg)):
+            decodedMainArray[i].append(msg[i])
+    # pprint.pprint(decodedMainArray)
+    
+    decodedMessage = ""
+    for i in range(len(decodedMainArray)):
+        a = filter(lambda x: x != '_', decodedMainArray[i])
+        # most_common, num_most_common = Counter(a).most_common(1)[0]
+        # print(most_common, num_most_common)
+        decodedMessage += Counter(decodedMainArray[i]).most_common(1)[0][0]
+    return decodedMessage
     
 def decode_message(encoded_characters):
     key = encoded_characters[0]
-    mapping = gen_character_mapping(key)
-    if mapping[TERMINATOR] != encoded_characters[-1]:
-        key = encoded_characters[-1]
-        mapping = gen_character_mapping(key)
-        if mapping[TERMINATOR] != encoded_characters[0]:
-            return 'Could not decode message' 
-        encoded_characters = encoded_characters[::-1]
+    mapping = gen_character_mapping(key) 
+    # if mapping[TERMINATOR] != encoded_characters[-1]:
+    #     print(encoded_characters[-1], '\n', mapping[TERMINATOR])
+    #     key = encoded_characters[-1]
+    #     mapping = gen_character_mapping(key)
+    #     if mapping[TERMINATOR] != encoded_characters[0]:
+    #         return 'Could not decode message' 
+    #     encoded_characters = encoded_characters[::-1]
     mapping = dict(map(reversed, mapping.items()))
-
-    decodedString = ''.join(mapping[char] for char in encoded_characters[1:-1])
-    # print(decodedString)
-    return decodedString
+    decodedArray = []
+    for char in encoded_characters[1:-1]:
+        if char not in mapping:
+            decodedArray += "_"
+        else: 
+            decodedArray += mapping[char]
+    return decodedArray
 
 
 def main():
