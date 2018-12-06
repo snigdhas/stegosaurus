@@ -7,11 +7,14 @@ class ColorLabeler:
 	def __init__(self):
 	
 		colors = OrderedDict({
-			"Maroon": (134, 0, 0),
-			"Pink": (203,70,126),
-			"Green": (45,161,60),
-			"Purple": (140, 6, 150),
-			"blue": (41, 103, 202),
+                        
+			"Maroon": (73,49,45),
+                        "maroon": (79,55,51),
+			"Pink": (125,73,83),
+			"Green": (65,84,58),
+                        "green":  (55,73,45),
+			"Purple": (81,57,90),
+			"BluE": (57,71,108),
 			"Blue": (45, 51, 233)})
 			# "Blue": (26,63,125), 
 			# "Pink": (141,40,61), 

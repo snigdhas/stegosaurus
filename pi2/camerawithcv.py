@@ -64,16 +64,16 @@ while True:
         camera.start_preview()
         camera.preview.alpha = 255
 
-        #raw_input("Press enter")
-        button.wait_for_press()
+        input("Press enter")
+        #button.wait_for_press()
         
         with picamera.array.PiRGBArray(camera) as stream:
             camera.resolution = (1920, 1080);
             camera.capture(stream, format='bgr')
             image = stream.array
             cv2.imwrite("zoom.jpg", image)
-            shapes = alltheCV(image)
-            textoutput = decode(shapes)
-            lcd = CharLCD('PCF8574', 0x27)
-            lcd.write_string(textoutput)
-            time.sleep(2)
+            #shapes = alltheCV(image)
+            #textoutput = decode(shapes)
+            #lcd = CharLCD('PCF8574', 0x27)
+            #lcd.write_string(textoutput)
+            time.sleep(20)

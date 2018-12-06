@@ -22,8 +22,9 @@ def take_picture():
     camera.stop_preview()
     
 while True:
-    input_state = GPIO.input(18)
-    if input_state == False:
+    #input ("Press enter")
+    input_mode = GPIO.input(18)
+    if input_mode == False:
         take_picture()
         sleep(4)
 
