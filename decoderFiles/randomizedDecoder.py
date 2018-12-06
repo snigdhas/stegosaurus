@@ -39,10 +39,17 @@ def encode(user_input):
 def column(matrix, i):
     return [row[i] for row in matrix]
 
-def decode(message):
+def decode(input_message):
+    message_concat = []
+    for i in range(len(input_message)):
+        message_concat.append([])
+        for j in range(len(input_message[i])):
+            message_concat[i].append(input_message[i][j][2])
+    formatted_message = list(filter(lambda x: len(x) == 24, message_concat))
+
     encodedMessage = []
     decodedMessage = defaultdict(int)
-    for msg in message:
+    for msg in formatted_message:
         new_message = []
         for i in range(8):
             new_message.append(tuple(map(lambda x: tuple(x.split(" ")), msg[i * 3 : i * 3 + 3])))
