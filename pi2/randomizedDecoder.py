@@ -44,7 +44,9 @@ def decode(input_message):
     for i in range(len(input_message)):
         message_concat.append([])
         for j in range(len(input_message[i])):
-            message_concat[i].append(input_message[i][j][2].lower())
+            msg = input_message[i][j][2].lower()
+            if (msg.split(' ')[0] != ''):
+                message_concat[i].append(input_message[i][j][2].lower())
     formatted_message = list(filter(lambda x: len(x) == 24, message_concat))
     encodedMessage = []
     # decodedMessage = defaultdict(int)
@@ -65,7 +67,7 @@ def decode(input_message):
         a = filter(lambda x: x != '_', decodedMainArray[i])
         # most_common, num_most_common = Counter(a).most_common(1)[0]
         # print(most_common, num_most_common)
-        decodedMessage += Counter(decodedMainArray[i]).most_common(1)[0][0]
+        decodedMessage += Counter(a).most_common(1)[0][0]
     return decodedMessage
     
 def decode_message(encoded_characters):
